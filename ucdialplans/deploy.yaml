@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ucdialplans
+  namespace: ucdialplans
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ucdialplans
+  template:
+    metadata:
+      labels:
+        app: ucdialplans
+        name: ucdialplans
+    spec:
+      restartPolicy: Always
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: server-type
+                operator: In
+                values:
+                - nuc
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: server-speed
+                operator: In
+                values:
+                - nuc-fast
+      containers:
+      - name: ucdialplans
+        image: registry.ucdialplans.com/ucdialplans:latest
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+              - all
+        resources:
+          requests:
+            cpu: 300m
+            memory: 800Mi
+          limits:
+            cpu: 1000m
+            memory: 800Mi
+        volumeMounts:
+        - name: ucdialplans-webconfig
+          mountPath: /var/www/web.config
+          subPath: web.config
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+      automountServiceAccountToken: false
+      volumes:
+        - configMap:
+            items:
+            - key: web.config
+              path: web.config
+            name: ucdialplans-webconfig
+          name: ucdialplans-webconfig

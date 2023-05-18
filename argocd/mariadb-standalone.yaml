@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-standalone
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: 12.*
+    chart: mariadb
+    helm:
+      valueFiles:
+      - $values/mariadb-standalone/values.yaml
+  - repoURL: 'git@github.com:kenlasko/K3S.git'
+    ref: values
+  - repoURL: 'git@github.com:kenlasko/K3S.git'
+    path: mariadb-standalone
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mariadb-standalone
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

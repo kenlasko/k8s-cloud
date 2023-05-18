@@ -1,0 +1,16 @@
+image:
+  pullPolicy: Always
+persistence:
+  size: 500Mi
+  storageClass: longhorn-high-value
+service:
+  type: ClusterIP
+nodeSelector:
+  server-type: nuc
+resources:
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limits:
+    cpu: 500m
+    memory: 200Mi

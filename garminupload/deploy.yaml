@@ -1,0 +1,38 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: garmin-upload
+  namespace: garmin-upload
+spec:
+  schedule: "@yearly" 
+  suspend: true
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            server-speed: nuc-slow
+          restartPolicy: Never
+          volumes:
+          - name: garmindata
+            persistentVolumeClaim:
+              claimName: longhorn-garmin-pvc
+          containers:
+          - name: garmin-upload
+            image: registry.ucdialplans.com/garmin-upload
+            imagePullPolicy: Always
+            resources:
+              requests:
+                cpu: 100m
+                memory: 300Mi
+              limits:
+                cpu: 300m
+                memory: 300Mi
+            env:
+            - name: GarminLastActivity
+              value: "10978529620"
+            volumeMounts:
+            - name: garmindata
+              mountPath: /garmin-data

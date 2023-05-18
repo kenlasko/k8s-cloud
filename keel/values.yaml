@@ -1,0 +1,29 @@
+nodeSelector:
+  server-type: nuc
+
+polling:
+  enabled: true
+  defaultSchedule: "0 0 7 * * *"
+
+helmProvider:
+  enabled: false
+
+mail:
+  enabled: true
+  from: "Keel Updates <keelupdates@ucdialplans.com>"
+  to: "ken.lasko@gmail.com"
+  smtp:
+    server: "smtp.sendgrid.net"
+    port: 587
+    user: "apikey"
+    password: "***REMOVED***"
+
+basicauth:
+  enabled: true
+  user: "kenadmin"
+  password: "***REMOVED***"
+
+persistence:
+  enabled: true
+  storageClass: "longhorn"
+  size: 1Gi
