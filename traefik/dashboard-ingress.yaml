@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`traefik.ucdialplans.com`)
+  - match: Host(`(?!cloud\-)traefik.ucdialplans.com`)
     kind: Rule
     services:
     - name: api@internal
