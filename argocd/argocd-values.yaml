@@ -1,6 +1,4 @@
 global:
-  nodeSelector:
-    server-type: nuc 
   networkPolicy:
     create: true
     defaultDenyIngress: true
