@@ -1,6 +1,6 @@
 global:
   networkPolicy:
-    create: true
+    create: false
     defaultDenyIngress: true
 
 configs:
