@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`alertmanager.ucdialplans.com`) 
+  - match: Host(`cloud-alertmanager.ucdialplans.com`) 
     kind: Rule
     services:
     - name: alertmanager-operated

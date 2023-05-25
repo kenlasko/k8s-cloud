@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`prometheus.ucdialplans.com`) 
+  - match: Host(`cloud-prometheus.ucdialplans.com`) 
     kind: Rule
     services:
     - name: prometheus-operated

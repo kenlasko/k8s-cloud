@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`grafana.ucdialplans.com`) 
+  - match: Host(`cloud-grafana.ucdialplans.com`) 
     kind: Rule
     services:
     - name: grafana 

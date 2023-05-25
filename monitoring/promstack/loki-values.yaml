@@ -1,6 +1,0 @@
-backend:
-  persistence:
-    storageClass: longhorn
-    size: 20Gi
-  nodeSelector: 
-    server-type: "nuc"
