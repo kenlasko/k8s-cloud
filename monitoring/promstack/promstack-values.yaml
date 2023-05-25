@@ -67,7 +67,7 @@ alertmanager:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 50Gi
+              storage: 5Gi
 
 grafana:
   enabled: true
@@ -288,24 +288,8 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 50Gi
-      volumes:
-        storageClassName: local-path
-        capacity:
-          storage: 250Mi
-        accessModes:
-        - ReadWriteOnce
-        persistentVolumeReclaimPolicy: Retain
-        local:
-          path: "/kube-storage/vaultwarden"
-        nodeAffinity:
-          required:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - onode1
+              storage: 20Gi
+
 
 additionalPrometheusRulesMap:
   rule-name: 
