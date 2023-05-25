@@ -16,6 +16,8 @@ spec:
         name: ucdialplans
     spec:
       restartPolicy: Always
+      imagePullSecrets:
+      - name: dockerhub-kenlasko-creds
       containers:
       - name: ucdialplans
         image: kenlasko/ucdialplans:latest
@@ -30,11 +32,11 @@ spec:
               - all
         resources:
           requests:
-            cpu: 300m
-            memory: 800Mi
+            cpu: 1000m
+            memory: 1200Mi
           limits:
             cpu: 1000m
-            memory: 800Mi
+            memory: 1200Mi
         volumeMounts:
         - name: ucdialplans-webconfig
           mountPath: /var/www/web.config
