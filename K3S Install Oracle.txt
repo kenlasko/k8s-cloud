@@ -70,40 +70,8 @@ source ~/.bashrc
 ## Everything below should get deployed via ArgoCD. The below is just for reference ##
 ######################################################################################
 
-# Install Longhorn
-helm repo add longhorn https://charts.longhorn.io
-helm repo update
-helm install --create-namespace -n longhorn longhorn longhorn/longhorn --values ~/k3s/longhorn/values.yaml
-
-# Add Longhorn dashboard access
-kubectl delete service longhorn-frontend -n longhorn
-kubectl apply -f ~/k3s/longhorn/longhorn-service.yaml
-kubectl apply -f ~/k3s/longhorn/dashboard-ingress.yaml
-
 # Add local-path storage class
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.23/deploy/local-path-storage.yaml
-
-# Install NFS server for Longhorn
-kubectl apply -f ~/k3s/nfs-backup
-
-# In Longhorn, go to Settings - General and set the backup target to: nfs://nfs-server-svc.nfs-server:/
-
-# Add Portainer
-helm repo add portainer https://portainer.github.io/k8s/
-helm repo update
-helm install --create-namespace -n portainer portainer portainer/portainer --values ~/k3s/portainer/values.yaml
-kubectl apply -f ~/k3s/portainer/dashboard-ingress.yaml
-
-# Install local registry
-kubectl apply -f ~/k3s/registry/
-docker push registry.ucdialplans.com/dxp-base-image
-docker push registry.ucdialplans.com/epc-groupupdate
-docker push registry.ucdialplans.com/epc-groupupdate-jb
-docker push registry.ucdialplans.com/epc-testmonitor
-docker push registry.ucdialplans.com/epc-activecount
-docker push registry.ucdialplans.com/dxp-in-license-check
-docker push registry.ucdialplans.com/garminupload
-docker push registry.ucdialplans.com/ucdialplans
 
 # Install Prometheus/Grafana monitoring 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -113,10 +81,6 @@ kubectl apply -f ~/k3s/monitoring/helm-ingress-prometheus.yaml
 kubectl apply -f ~/k3s/monitoring/helm-ingress-alertmanager.yaml
 kubectl apply -f ~/k3s/monitoring/helm-ingress-grafana.yaml
 kubectl apply -f ~/k3s/monitoring/grafana-secrets.yaml
-
-# Install Loki
-helm repo add grafana https://grafana.github.io/helm-charts
-helm install -n monitoring loki grafana/loki-stack --values  ~/k3s/monitoring/loki-values.yaml
 
 # Install MariaDB
 helm repo add bitnami https://charts.bitnami.com/bitnami
