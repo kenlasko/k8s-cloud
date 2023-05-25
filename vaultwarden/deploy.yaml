@@ -98,5 +98,5 @@ spec:
       volumes:
         - name: vaultwarden-data
           persistentVolumeClaim:
-            claimName: longhorn-vaultwarden-pvc
+            claimName: vaultwarden-pvc
       automountServiceAccountToken: false
