@@ -1,17 +1,15 @@
-namespaceOverride: mariadb-standalone
+namespaceOverride: mariadb
 fullnameOverride: mariadb
 commonLabels:
   networkClass: Database
 image:
-  tag: 10.9.4
+  tag: 10.9.5
 auth:
   rootPassword: "***REMOVED***"
 primary:
-  nodeSelector:
-    server-type: nuc
   persistence:
-    storageClass: "longhorn-high-value"
-    existingClaim: "longhorn-mariadb-pvc"
+    storageClass: "local-path"
+    existingClaim: "mariadb-pvc"
   configuration: |-
     [mysqld]
     skip-name-resolve
