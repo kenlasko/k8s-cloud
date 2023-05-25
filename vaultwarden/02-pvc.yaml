@@ -5,6 +5,8 @@ metadata:
   namespace: vaultwarden
 spec:
   storageClassName: local-path
+  accessModes:
+  - ReadWriteOnce 
   resources:
     requests:
       storage: 250Mi
@@ -19,7 +21,7 @@ spec:
   capacity:
     storage: 250Mi
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
     path: "/kube-storage"
