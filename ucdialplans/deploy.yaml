@@ -18,7 +18,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: ucdialplans
-        image: registry.ucdialplans.com/ucdialplans:latest
+        image: kenlasko/ucdialplans:latest
         imagePullPolicy: IfNotPresent
         securityContext:
           allowPrivilegeEscalation: false
