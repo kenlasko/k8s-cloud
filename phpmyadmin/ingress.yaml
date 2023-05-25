@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`mariadb.ucdialplans.com`) 
+  - match: Host(`cloud-mariadb.ucdialplans.com`) 
     kind: Rule
     services:
     - name: phpmyadmin

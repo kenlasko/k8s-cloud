@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`keel.ucdialplans.com`) 
+  - match: Host(`cloud-keel.ucdialplans.com`) 
     kind: Rule
     services:
     - name: keel-frontend
