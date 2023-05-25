@@ -95,11 +95,6 @@ grafana:
     orgId: 1
     url: http://promstack-prometheus:9090
     version: 1
-  
-  extraConfigmapMounts:
-  - name: grafana-alerts
-    mountPath: /etc/grafana/provisioning/alerting
-    configMap: grafana-alerts
 
   plugins:
     - grafana-piechart-panel
