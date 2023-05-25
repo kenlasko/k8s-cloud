@@ -1,3 +1,5 @@
+image:
+  repository: rscorer/keel-aarch64
 polling:
   enabled: true
   defaultSchedule: "0 0 7 * * *"
