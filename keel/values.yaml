@@ -1,7 +1,7 @@
 image:
-  repository: rscorer/keel-aarch64
+  repository: grewhit25/keel-arm64
   tag: latest
-  
+
 polling:
   enabled: true
   defaultSchedule: "0 0 7 * * *"
