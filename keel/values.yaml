@@ -1,6 +1,3 @@
-nodeSelector:
-  server-type: nuc
-
 polling:
   enabled: true
   defaultSchedule: "0 0 7 * * *"
