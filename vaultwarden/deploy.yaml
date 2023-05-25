@@ -21,8 +21,6 @@ spec:
         name: vaultwarden
     spec:
       restartPolicy: Always
-      nodeSelector:
-        server-type: nuc
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

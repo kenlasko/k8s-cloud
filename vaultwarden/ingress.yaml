@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`vaultwarden.ucdialplans.com`) 
+  - match: Host(`cloud-vaultwarden.ucdialplans.com`) 
     kind: Rule
     services:
     - name: vaultwarden-ui
@@ -30,7 +30,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`vaultwarden.ucdialplans.com`) && Path(`/notifications/hub`)
+  - match: Host(`cloud-vaultwarden.ucdialplans.com`) && Path(`/notifications/hub`)
     kind: Rule
     services:
     - name: vaultwarden-ws

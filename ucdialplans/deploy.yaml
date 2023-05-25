@@ -16,23 +16,6 @@ spec:
         name: ucdialplans
     spec:
       restartPolicy: Always
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: server-type
-                operator: In
-                values:
-                - nuc
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
-              matchExpressions:
-              - key: server-speed
-                operator: In
-                values:
-                - nuc-fast
       containers:
       - name: ucdialplans
         image: registry.ucdialplans.com/ucdialplans:latest
