@@ -37,6 +37,7 @@ primary:
     log-bin-index     = slave-bin.index
     binlog_format     = mixed 
     slave-skip-errors = 1451,1452,1032,1062
+    report-host       = onode1
 
     [client]
     port=3306
