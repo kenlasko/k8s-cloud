@@ -6,7 +6,7 @@ metadata:
   namespace: ucdialplans
 spec:
   schedule: "0 8 * * *" 
-  suspend: false
+  suspend: true
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
