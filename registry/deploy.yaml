@@ -16,8 +16,6 @@ spec:
         name: registry
     spec:
       restartPolicy: Always
-      nodeSelector:
-        server-type: nuc
       containers:
       - name: registry
         image: registry:2
