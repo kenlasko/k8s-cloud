@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`cloud-registry.ucdialplans.com`) 
+  - match: Host(`registry.ucdialplans.com`) 
     kind: Rule
     services:
     - name: registry-service
