@@ -1,0 +1,58 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: epc-activecount
+  namespace: nectar
+spec:
+  schedule: "00 * * * *"  # Every hour
+  suspend: false
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: epc-activecount
+            image: registry.ucdialplans.com/dxp-base-image
+            imagePullPolicy: Always
+            args: ["pwsh","Get-EPCCurrentCounts.ps1"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              runAsNonRoot: true
+              runAsUser: 1000
+              capabilities:
+                drop:
+                  - all
+            env:
+            - name: SendgridAPIKey
+              valueFrom:
+                secretKeyRef:
+                  name: sendgrid
+                  key: apikey
+            volumeMounts:
+            - name: nectardata
+              mountPath: /nectar-data
+            - name: nectar-ps-creds
+              mountPath: /etc/nectar-ps-creds
+              readOnly: true
+            - name: epc-activecount
+              mountPath: /nectar-code/Get-EPCCurrentCounts.ps1
+              subPath: Get-EPCCurrentCounts.ps1
+          volumes:
+          - name: nectardata
+            persistentVolumeClaim:
+              claimName: nectar-data-pvc
+          - name: nectar-ps-creds
+            secret:
+              secretName: nectar-ps-creds
+              defaultMode: 0444
+          - configMap:
+              items:
+              - key: Get-EPCCurrentCounts.ps1
+                path: Get-EPCCurrentCounts.ps1
+              name: epc-activecount
+            name: epc-activecount           
