@@ -15,8 +15,6 @@ spec:
         app: cloudflare-tunnel
         name: cloudflare-tunnel
     spec:
-      nodeSelector:
-        node-type: worker
       containers:
         - name: cloudflare-tunnel
           image: cloudflare/cloudflared:latest
