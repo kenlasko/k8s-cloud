@@ -29,6 +29,10 @@ configs:
       url: https://grafana.github.io/helm-charts
       name: grafana
       type: helm
+    headlamp:
+      url: https://headlamp-k8s.github.io/headlamp/
+      name: headlamp
+      type: helm
     intel:
       url: https://intel.github.io/helm-charts/
       name: intel
@@ -48,6 +52,10 @@ configs:
     netdata:
       url: https://netdata.github.io/helmchart/
       name: netdata
+      type: helm
+    nfs:
+      url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+      name: nfs-subdir-external-provisioner
       type: helm
     pihole:
       url: https://mojo2600.github.io/pihole-kubernetes/
