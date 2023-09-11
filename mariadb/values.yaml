@@ -3,13 +3,22 @@ fullnameOverride: mariadb
 commonLabels:
   networkClass: Database
 image:
-  tag: 10.9.5
+  tag: 10.9.8
 auth:
   rootPassword: ***REMOVED***
 primary:
   persistence:
     storageClass: "local-path"
     existingClaim: "mariadb-pvc"
+  customLivenessProbe:
+    exec:
+      command:
+      - healthcheck.sh
+      - --su-mysql
+      - --replication_io
+      - --replication_sql
+      - --replication_seconds_behind_master=10
+      - --replication    
   configuration: |-
     [mysqld]
     skip-name-resolve
