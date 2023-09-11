@@ -9,16 +9,7 @@ auth:
 primary:
   persistence:
     storageClass: "local-path"
-    existingClaim: "mariadb-pvc"
-  customLivenessProbe:
-    exec:
-      command:
-      - healthcheck.sh
-      - --su-mysql
-      - --replication_io
-      - --replication_sql
-      - --replication_seconds_behind_master=10
-      - --replication    
+    existingClaim: "mariadb-pvc"   
   configuration: |-
     [mysqld]
     skip-name-resolve
