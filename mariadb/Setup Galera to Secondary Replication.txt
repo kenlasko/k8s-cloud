@@ -11,11 +11,13 @@ mysqldump -h mariadb.mariadb.svc.cluster.local -u root -p***REMOVED*** -B homeas
 # Once done, then unlock from first:
 unlock tables;
 
-# From Onode1 host
-Copy backup to /home/ubuntu/mariadb-repl-backup.sql
+# From KenPC 
+Copy backup from NUC6 to ONode1 /home/ubuntu/mariadb-repl-backup.sql
+
+# From ONode1
 mv /home/ubuntu/mariadb-repl-backup.sql /kube-storage/mariadb/
 
-# Then on mariadb pod command prompt:
+# Then on Onode1 mariadb pod command prompt:
 mariadb -u root -p***REMOVED***
 stop slave;
 
@@ -28,7 +30,7 @@ drop database phpmyadmin;
 mariadb -u root -p***REMOVED*** < /bitnami/mariadb/mariadb-repl-backup.sql
 
 # Then run 
-set global gtid_slave_pos = "0-1-1777542,1-1-42";
+set global gtid_slave_pos = "0-1-1926187,1-1-42";
 change master to
     master_host='kenlasko.duckdns.org',
     master_user='replicator',
