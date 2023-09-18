@@ -1,0 +1,37 @@
+kind: IngressRoute
+apiVersion: traefik.containo.us/v1alpha1
+metadata:
+  name: k3s
+  namespace: traefik
+spec:
+  entryPoints: 
+    - websecure
+  routes:
+  - match: Host(`cloud-k3s.ucdialplans.com`) 
+    kind: Rule
+    services:
+    - name: kubernetes
+      namespace: default
+      port: 443
+      serversTransport: k3s-root
+    middlewares:
+    - name: traefik-security
+      namespace: traefik
+  tls:
+    secretName: traefik-wildcard-cert
+    options:
+     name: tls-options-default
+     namespace: traefik
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: k3s-root
+  namespace: default
+spec:
+  serverName: cloud-k3s.ucdialplans.com
+  #insecureSkipVerify: true
+  rootCAsSecrets:
+  - traefik-k3s-ca
