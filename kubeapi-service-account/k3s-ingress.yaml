@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`cloud-k3s.ucdialplans.com`) 
+  - match: Host(`k3s-cloud.ucdialplans.com`) 
     kind: Rule
     services:
     - name: kubernetes
@@ -31,7 +31,7 @@ metadata:
   name: k3s-root
   namespace: default
 spec:
-  serverName: cloud-k3s.ucdialplans.com
+  serverName: k3s-cloud.ucdialplans.com
   #insecureSkipVerify: true
   rootCAsSecrets:
   - traefik-k3s-ca
