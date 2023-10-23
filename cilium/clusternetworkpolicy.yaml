@@ -16,6 +16,7 @@ spec:
         protocol: UDP
 
 ---
+apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
 metadata:
   name: core-dns-egress
