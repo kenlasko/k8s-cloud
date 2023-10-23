@@ -6,10 +6,10 @@ sudo apt update && sudo apt upgrade
 sudo apt install ansible nano 
 
 # Create first server
-curl -sfL https://get.k3s.io | K3S_TOKEN=***REMOVED*** sh -s - server --cluster-init --disable servicelb,traefik,local-storage --write-kubeconfig-mode 644 --disable-cloud-controller
+curl -sfL https://get.k3s.io | K3S_TOKEN=***REMOVED*** sh -s - server --disable servicelb,traefik,local-storage --write-kubeconfig-mode 644 --disable-cloud-controller --disable-network-policy --flannel-backend=none
 
 # Run next Ansible script
-ansible-playbook ~/k3s/ansible-k3s-post.yaml --ask-become-pass
+ansible-playbook ~/k3s-cloud/ansible-k3s-post.yaml --ask-become-pass
 
 # Restart k3s on each node in turn
 systemctl restart k3s
@@ -30,22 +30,30 @@ sudo apt-get install helm
 # Copy K3S config to home dir
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 
+
+# Install Cilium
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+helm install cilium cilium/cilium --version 1.14.3 --namespace kube-system --values ~/k3s-cloud/cilium/values.yaml
+
+# Configure IP Pool and L2 Announcements
+kubectl apply -f ~/k3s-cloud/cilium/
+
 # install MetalLB
 helm repo add metallb https://metallb.github.io/metallb 
 helm install --create-namespace -n metallb-system metallb metallb/metallb -n metallb-system
-kubectl apply -f ~/k3s/metallb/ip-pool.yaml
-kubectl apply -f ~/k3s/metallb/l2-advertise.yaml
+kubectl apply -f ~/k3s-cloud/metallb/ip-pool.yaml
+kubectl apply -f ~/k3s-cloud/metallb/l2-advertise.yaml
 
 # Install Traefik
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update
-helm install --create-namespace traefik traefik/traefik --namespace=traefik --values ~/k3s/traefik/values.yaml
-kubectl apply -f ~/k3s/traefik/
+helm install --create-namespace traefik traefik/traefik --namespace=traefik --values ~/k3s-cloud/traefik/values.yaml
+kubectl apply -f ~/k3s-cloud/traefik/
 
 # Install ArgoCD
 helm repo add argocd https://argoproj.github.io/argo-helm
-helm install argocd argocd/argo-cd --namespace=argocd --create-namespace --values ~/k3s/argocd/argocd-values.yaml
-kubectl apply -f ~/k3s/argocd/
+helm install argocd argocd/argo-cd --namespace=argocd --create-namespace --values ~/k3s-cloud/argocd/argocd-values.yaml
+kubectl apply -f ~/k3s-cloud/argocd/
 
 
 ######################################################################################
@@ -76,15 +84,15 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisione
 # Install Prometheus/Grafana monitoring 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install --create-namespace -n monitoring promstack prometheus-community/kube-prometheus-stack --values ~/k3s/monitoring/promstack-values.yaml
-kubectl apply -f ~/k3s/monitoring/helm-ingress-prometheus.yaml
-kubectl apply -f ~/k3s/monitoring/helm-ingress-alertmanager.yaml
-kubectl apply -f ~/k3s/monitoring/helm-ingress-grafana.yaml
-kubectl apply -f ~/k3s/monitoring/grafana-secrets.yaml
+helm install --create-namespace -n monitoring promstack prometheus-community/kube-prometheus-stack --values ~/k3s-cloud/monitoring/promstack-values.yaml
+kubectl apply -f ~/k3s-cloud/monitoring/helm-ingress-prometheus.yaml
+kubectl apply -f ~/k3s-cloud/monitoring/helm-ingress-alertmanager.yaml
+kubectl apply -f ~/k3s-cloud/monitoring/helm-ingress-grafana.yaml
+kubectl apply -f ~/k3s-cloud/monitoring/grafana-secrets.yaml
 
 # Install MariaDB
 helm repo add bitnami https://charts.bitnami.com/bitnami
-kubectl apply -f ~/k3s/mariadb/pv.yaml
-helm install --create-namespace -n mariadb mariadb -f ~/k3s/mariadb/values.yaml bitnami/mariadb-galera
-helm install --create-namespace -n mariadb-standalone mariadb-standalone -f ~/k3s/mariadb-standalone/values bitnami/mariadb
-kubectl apply -f ~/k3s/mariadb-backup/
+kubectl apply -f ~/k3s-cloud/mariadb/pv.yaml
+helm install --create-namespace -n mariadb mariadb -f ~/k3s-cloud/mariadb/values.yaml bitnami/mariadb-galera
+helm install --create-namespace -n mariadb-standalone mariadb-standalone -f ~/k3s-cloud/mariadb-standalone/values bitnami/mariadb
+kubectl apply -f ~/k3s-cloud/mariadb-backup/
