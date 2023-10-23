@@ -7,7 +7,7 @@ spec:
   entryPoints: 
     - websecure
   routes:
-  - match: Host(`lab-hubble.ucdialplans.com`) 
+  - match: Host(`cloud-hubble.ucdialplans.com`) 
     kind: Rule
     services:
     - name: hubble-ui
