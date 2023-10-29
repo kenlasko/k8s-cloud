@@ -10,6 +10,8 @@ k8sClientRateLimit:
 cluster:
   name: cloud
   id: 2
+operator: 
+  replicas: 1
 l2announcements:
   enabled: true
   leaseDuration: 30s
