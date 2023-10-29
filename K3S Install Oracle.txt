@@ -33,7 +33,7 @@ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 
 # Install Cilium
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-helm install cilium cilium/cilium --version 1.14.3 --namespace kube-system --values ~/k3s-cloud/cilium/values.yaml
+helm install cilium cilium/cilium --version 1.15.0-pre.1 --namespace kube-system --values ~/k3s-cloud/cilium/values.yaml
 
 # Configure IP Pool and L2 Announcements
 kubectl apply -f ~/k3s-cloud/cilium/
