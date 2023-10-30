@@ -18,7 +18,7 @@ l2announcements:
   leaseRenewDeadline: 10s
   leaseRetryPeriod: 4s
 externalIPs:
-  enabled: true
+  enabled: false
 kubeProxyReplacement: true
 hubble:
   relay:
