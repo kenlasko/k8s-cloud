@@ -44,6 +44,10 @@ helm install --create-namespace -n metallb-system metallb metallb/metallb -n met
 kubectl apply -f ~/k3s-cloud/metallb/ip-pool.yaml
 kubectl apply -f ~/k3s-cloud/metallb/l2-advertise.yaml
 
+# Install Cloudflare tunnel
+kubectl create namespace cloudflare
+kubectl apply -f ~/k3s-cloud/cloudflare-tunnel
+
 # Install Traefik
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update
@@ -59,11 +63,9 @@ kubectl apply -f ~/k3s-cloud/argocd/
 kubectl -n argocd get secret argocd-initial-admin-secret \
           -o jsonpath="{.data.password}" | base64 -d; echo
 
-# Install Cloudflare tunnel
-kubectl create namespace cloudflare
-kubectl apply -f ~/k3s-cloud/cloudflare-tunnel
-
-
+# Get K3S token
+kubectl -n default get secret api-service-account-secret \
+          -o jsonpath="{.data.token}" | base64 -d; echo
 
 ######################################################################################
 ##                  Install remote admin tools on non-K3S server                    ##
