@@ -19,7 +19,6 @@ sudo apt install -y bash-completion
 echo "source <(kubectl completion bash)" >> ~/.bashrc
 source ~/.bashrc
 
-
 # Install Helm
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 sudo apt-get install apt-transport-https --yes
@@ -29,7 +28,6 @@ sudo apt-get install helm
 
 # Copy K3S config to home dir
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-
 
 # Install Cilium
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
@@ -41,12 +39,6 @@ kubectl apply -f ~/k3s-cloud/cilium/
 # Install Cloudflare tunnel
 kubectl create namespace cloudflare
 kubectl apply -f ~/k3s-cloud/cloudflare-tunnel
-
-# Install Traefik
-helm repo add traefik https://helm.traefik.io/traefik
-helm repo update
-helm install --create-namespace traefik traefik/traefik --namespace=traefik --values ~/k3s-cloud/traefik/values.yaml
-kubectl apply -f ~/k3s-cloud/traefik/
 
 # Install ArgoCD
 helm repo add argocd https://argoproj.github.io/argo-helm
