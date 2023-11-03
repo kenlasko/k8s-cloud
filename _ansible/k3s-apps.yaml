@@ -23,6 +23,12 @@
       release_namespace: kube-system
       values_files:
       - /home/ubuntu/k3s-cloud/cilium/values.yaml
+  - name: Create Cloudflare namespace
+    kubernetes.core.k8s:
+      name: cloudflare
+      api_version: v1
+      kind: Namespace
+      state: present
   - name: Install Cloudflared
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
