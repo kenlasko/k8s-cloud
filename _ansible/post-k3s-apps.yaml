@@ -1,0 +1,50 @@
+---
+- hosts: master
+  tasks:
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /etc/rancher/k3s/k3s.yaml
+      dest: /home/ubuntu/.kube/config
+      owner: ubuntu
+      group: ubuntu
+      mode: '0600'
+  - name: Add node label to ONode1
+    shell: kubectl label nodes onode1 node-type=worker 
+  - name: Deploy Cilium
+    environment:
+      KUBECONFIG: /home/ubuntu/.kube/config
+    kubernetes.core.helm:
+      name: cilium
+      chart_ref: cilium/cilium
+      chart_version: "1.14.3"
+      release_namespace: kube-system
+      values_files:
+      - /home/ubuntu/k3s-cloud/cilium/values.yaml
+  - name: Add ArgoCD chart repo
+    kubernetes.core.helm_repository:
+      name: argocd
+      repo_url: "https://argoproj.github.io/argo-helm"
+  - name: Deploy ArgoCD
+    kubernetes.core.helm:
+      name: argocd
+      chart_ref: argocd/argo-cd
+      create_namespace: true
+      release_namespace: argocd
+      values_files:
+      - /home/ubuntu/k3s-cloud/argocd/values.yaml
+  - name: Apply ArgoCD secrets
+    kubernetes.core.k8s:
+      state: present
+      src: /home/ubuntu/k3s-cloud/argocd/01-secrets.yaml
+  - name: Apply ArgoCD K8s resources
+    kubernetes.core.k8s:
+      definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
+    with_fileglob:
+    - "/home/ubuntu/k3s-cloud/argocd/02-ingress.yaml"
+    - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
+    - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
+  - name: Apply Cilium resources
+    kubernetes.core.k8s:
+      definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
+    with_fileglob:
+    - "/home/ubuntu/k3s-cloud/cilium/[a-u]*.yaml"
