@@ -1,2 +1,5 @@
-[master]
-onode1  ansible_connection=local
+[workstation]
+localhost ansible_connection=local
+
+[k3s-bootstrap]
+onode1     ansible_connection=local
