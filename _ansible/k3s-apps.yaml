@@ -15,19 +15,19 @@
       repo_url: "https://helm.cilium.io/"
   - name: Deploy Cilium
     environment:
-      KUBECONFIG: /home/ken/.kube/config
+      KUBECONFIG: /home/ubuntu/.kube/config
     kubernetes.core.helm:
       name: cilium
       chart_ref: cilium/cilium
       chart_version: "1.14.3"
       release_namespace: kube-system
       values_files:
-      - /home/ken/k3s-cloud/cilium/values.yaml
+      - /home/ubuntu/k3s-cloud/cilium/values.yaml
   - name: Install Cloudflared
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/cloudflare-tunnel/*.yaml"
+    - "/home/ubuntu/k3s-cloud/cloudflare-tunnel/*.yaml"
   - name: Add ArgoCD chart repo
     kubernetes.core.helm_repository:
       name: argocd
@@ -39,20 +39,20 @@
       create_namespace: true
       release_namespace: argocd
       values_files:
-      - /home/ken/k3s-cloud/argocd/values.yaml
+      - /home/ubuntu/k3s-cloud/argocd/values.yaml
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ken/k3s-cloud/argocd/01-secrets.yaml
+      src: /home/ubuntu/k3s-cloud/argocd/01-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/argocd/02-ingress.yaml"
-    - "/home/ken/k3s-cloud/argocd/02-repoconfig.yaml"
-    - "/home/ken/k3s-cloud/argocd/[a-u]*.yaml"
+    - "/home/ubuntu/k3s-cloud/argocd/02-ingress.yaml"
+    - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
+    - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
   - name: Apply Cilium resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/cilium/[a-u]*.yaml"
+    - "/home/ubuntu/k3s-cloud/cilium/[a-u]*.yaml"
