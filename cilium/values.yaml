@@ -1,8 +1,12 @@
-k8sServiceHost: 10.0.0.101
-k8sServicePort: 6443
-# routingMode: native
-# ipv4NativeRoutingCIDR: 10.0.0.0/9
-# autoDirectNodeRoutes: true
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 6444
+routingMode: native
+ipv4NativeRoutingCIDR: 10.0.0.0/9
+autoDirectNodeRoutes: true
+tunnel: disabled
+bpf:
+  hostRouting: true
+  masquerade: true
 ipam:
   operator:
     clusterPoolIPv4PodCIDRList: 
