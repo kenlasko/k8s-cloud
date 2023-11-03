@@ -11,7 +11,7 @@
   - name: Copy k3s.yaml to .kube/config
     ansible.builtin.fetch:
       src: /etc/rancher/k3s/k3s.yaml
-      dest: /home/ken/.kube/config
+      dest: /home/ubuntu/.kube/config
       owner: ken
       group: ken
       mode: '0600'
