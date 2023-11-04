@@ -5,6 +5,10 @@ sudo apt update && sudo apt upgrade
 # On Kube1
 sudo apt install ansible nano 
 
+# Install via Ansible
+ansible-playbook _ansible/k3s-node-install.yaml --ask-become-pass
+ansible-playbook _ansible/k3s-apps.yaml --ask-become-pass
+
 # Create first server
 curl -sfL https://get.k3s.io | K3S_TOKEN=***REMOVED*** sh -s - server --disable servicelb,traefik,local-storage --write-kubeconfig-mode 644 --disable-cloud-controller ## --disable-network-policy --flannel-backend=none
 
@@ -25,6 +29,7 @@ sudo apt-get install apt-transport-https --yes
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 sudo apt-get update
 sudo apt-get install helm
+
 
 # Copy K3S config to home dir
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
