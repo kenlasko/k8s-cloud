@@ -8,6 +8,7 @@ bpf:
   hostRouting: true
   masquerade: true
 ipam:
+  mode: kubernetes
   operator:
     clusterPoolIPv4PodCIDRList: 
     - 10.42.0.0/16
@@ -16,7 +17,7 @@ k8sClientRateLimit:
   burst: 10
 cluster:
   name: cloud
-  id: 2
+  id: 1
 operator: 
   replicas: 1
 l2announcements:
