@@ -20,6 +20,10 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: mariadb
+  ignoreDifferences:
+  - group: ""
+    kind: service
+    name: cloud-tailscale-egress
   syncPolicy:
     automated:
       selfHeal: true
