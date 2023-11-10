@@ -22,7 +22,7 @@ spec:
     namespace: mariadb
   ignoreDifferences:
   - jsonPointers:
-      - /spec/externalName
+    - /spec/externalName
     kind: Service
   syncPolicy:
     automated:
