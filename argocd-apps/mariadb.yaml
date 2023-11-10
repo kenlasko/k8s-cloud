@@ -24,6 +24,8 @@ spec:
   - group: ''
     kind: service
     name: cloud-tailscale-egress
+    jsonPointers:
+    - /spec/externalName
   syncPolicy:
     automated:
       selfHeal: true
