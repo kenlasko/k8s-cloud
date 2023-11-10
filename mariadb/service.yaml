@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    tailscale.com/tailnet-ip: 100.72.51.169
+  name: mariadb
+spec:
+  externalName: mariadb-cloud-egress
+  type: ExternalName
