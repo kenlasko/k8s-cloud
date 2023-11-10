@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
     tailscale.com/tailnet-ip: 100.72.51.169
-  name: mariadb
+  name: mariadb-tailscale-egress
 spec:
   externalName: mariadb-cloud-egress
   type: ExternalName
