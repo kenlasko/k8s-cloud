@@ -73,9 +73,9 @@ configs:
       url: https://prometheus-community.github.io/helm-charts
       name: promstack
       type: helm
-    rancher:
-      url: https://releases.rancher.com/server-charts/latest
-      name: rancher
+    tailscale:
+      url: https://charts.visonneau.fr
+      name: tailscale
       type: helm
     traefik:
       url: https://helm.traefik.io/traefik
