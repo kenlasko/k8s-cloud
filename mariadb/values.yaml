@@ -7,7 +7,11 @@ auth:
 primary:
   persistence:
     storageClass: "local-path"
-    existingClaim: "mariadb-pvc"   
+    existingClaim: "mariadb-pvc"
+service:
+  annotations:
+    tailscale.com/expose: 'true'
+    tailscale.com/hostname: 'mariadb-cloud' 
   configuration: |-
     [mysqld]
     skip-name-resolve
