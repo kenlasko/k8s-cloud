@@ -48,4 +48,20 @@ primary:
     port=3306
     socket=/opt/bitnami/mariadb/tmp/mysql.sock
     pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
-  
+
+sidecars:
+- name: cloud-mariadb-ts
+  imagePullPolicy: Always
+  image: "ghcr.io/tailscale/tailscale:latest"
+  env:
+    # Store the state in a k8s secret
+  - name: TS_KUBE_SECRET
+    value: "tailscale"
+  - name: TS_USERSPACE
+    value: "false"
+  - name: TS_AUTHKEY
+    value: "***REMOVED***"
+  securityContext:
+    capabilities:
+      add:
+      - NET_ADMIN
