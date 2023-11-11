@@ -2,6 +2,8 @@ namespaceOverride: mariadb
 fullnameOverride: mariadb
 commonLabels:
   networkClass: Database
+serviceAccount:
+  automountServiceAccountToken: true
 auth:
   rootPassword: ***REMOVED***
 primary:
