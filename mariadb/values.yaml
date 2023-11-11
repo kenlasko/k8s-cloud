@@ -58,7 +58,7 @@ primary:
     env:
       # Store the state in a k8s secret
     - name: TS_KUBE_SECRET
-      value: "mariadb"
+      value: ""
     - name: TS_USERSPACE
       value: "false"
     - name: TS_AUTHKEY
