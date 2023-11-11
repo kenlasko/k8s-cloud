@@ -34,7 +34,7 @@ service:
     server-id         = 03
     relay-log-index   = slave-relay-bin.index
     relay-log         = slave-relay-bin
-    gtid_domain_id    = 99
+    gtid_domain_id    = 0
     log-bin           = slave-bin
     log-bin-index     = slave-bin.index
     binlog_format     = mixed 
