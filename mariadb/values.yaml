@@ -57,8 +57,8 @@ primary:
     image: "ghcr.io/tailscale/tailscale:latest"
     env:
       # Store the state in a k8s secret
-    - name: TS_HOSTNAME
-      value: "cloud-mariadb"
+    # - name: TS_HOSTNAME
+    #   value: "cloud-mariadb"
     - name: TS_KUBE_SECRET
       value: ""
     - name: TS_USERSPACE
