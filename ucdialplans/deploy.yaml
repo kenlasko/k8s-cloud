@@ -29,7 +29,7 @@ spec:
           runAsUser: 1000
           capabilities:
             drop:
-              - all
+            - all
         resources:
           requests:
             cpu: 1000m
