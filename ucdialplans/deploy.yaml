@@ -51,9 +51,9 @@ spec:
           failureThreshold: 3
       automountServiceAccountToken: false
       volumes:
-        - configMap:
-            items:
-            - key: web.config
-              path: web.config
-            name: ucdialplans-webconfig
+      - configMap:
+          items:
+          - key: web.config
+            path: web.config
           name: ucdialplans-webconfig
+        name: ucdialplans-webconfig
