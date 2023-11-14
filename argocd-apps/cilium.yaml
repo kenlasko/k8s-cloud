@@ -44,4 +44,6 @@ spec:
     name: cilium-ca
   syncPolicy:
     automated:
-      selfHeal: false
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
