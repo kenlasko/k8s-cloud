@@ -6,7 +6,7 @@ show variables like 'gtid_binlog_pos';
 # Take results from above and set gtid_slave_pos for last step
 
 # From another window on same cluster member:
-mysqldump -h mariadb.mariadb.svc.cluster.local -u root -p***REMOVED*** -B homeassist phpmyadmin ucdialplans vaultwarden > /bitnami/mariadb/data/mariadb-repl-backup.sql
+mariadb-dump -h mariadb.mariadb.svc.cluster.local -u root -p***REMOVED*** -B gitea homeassist phpmyadmin ucdialplans vaultwarden > /bitnami/mariadb/data/mariadb-repl-backup.sql
 
 # Once done, then unlock from first:
 unlock tables;
@@ -20,7 +20,7 @@ mv /home/ubuntu/mariadb-repl-backup.sql /kube-storage/mariadb/
 # Then on Onode1 mariadb pod command prompt:
 mariadb -u root -p***REMOVED***
 stop slave;
-
+drop database gitea;
 drop database homeassist;
 drop database ucdialplans;
 drop database vaultwarden;
@@ -30,9 +30,10 @@ drop database phpmyadmin;
 mariadb -u root -p***REMOVED*** < /bitnami/mariadb/mariadb-repl-backup.sql
 
 # Then run 
-set global gtid_slave_pos = "0-1-2904786,1-1-42";
+mariadb -u root -p***REMOVED***
+set global gtid_slave_pos = "0-1-3853320,1-1-42";
 change master to
-    master_host='kenlasko.duckdns.org',
+    master_host='100.110.247.33',
     master_user='replicator',
     master_password='***REMOVED***',
     master_port=3306,
