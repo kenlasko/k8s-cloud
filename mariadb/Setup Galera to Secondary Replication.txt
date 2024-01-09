@@ -31,7 +31,7 @@ mariadb -u root -p***REMOVED*** < /bitnami/mariadb/mariadb-repl-backup.sql
 
 # Then run 
 mariadb -u root -p***REMOVED***
-set global gtid_slave_pos = "0-1-3853320,1-1-42";
+set global gtid_slave_pos = "0-1-3964780,1-1-42";
 change master to
     master_host='100.110.247.33',
     master_user='replicator',

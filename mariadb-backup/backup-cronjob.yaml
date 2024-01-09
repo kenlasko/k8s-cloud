@@ -25,13 +25,13 @@ spec:
                     - rpi1
           containers:
           - name: mariadb-backup
-            image: mariadb:10.9.4
+            image: mariadb:11.2.2
             imagePullPolicy: IfNotPresent
             env: 
             - name: K3S_ROOT_PW 
               valueFrom: 
                 secretKeyRef: 
-                  name: mariadb 
+                  name: mariadb-passwords
                   key: mariadb-root-password
             command: 
             - /bin/sh
