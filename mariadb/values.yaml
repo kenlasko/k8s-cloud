@@ -60,7 +60,10 @@ primary:
     - name: TS_USERSPACE
       value: "false"
     - name: TS_AUTHKEY
-      value: "***REMOVED***"
+      valueFrom:
+        secretKeyRef:
+          name: ts-authkey
+          key: ts-authkey 
     securityContext:
       capabilities:
         add:
