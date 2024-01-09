@@ -5,15 +5,11 @@ commonLabels:
 serviceAccount:
   automountServiceAccountToken: true
 auth:
-  rootPassword: ***REMOVED***
+  existingSecret: mariadb-passwords
 primary:
   persistence:
     storageClass: "local-path"
     existingClaim: "mariadb-pvc"
-# service:
-#   annotations:
-#     tailscale.com/expose: 'true'
-#     tailscale.com/hostname: 'mariadb-cloud' 
   configuration: |-
     [mysqld]
     skip-name-resolve
