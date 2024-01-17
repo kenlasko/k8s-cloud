@@ -15,6 +15,14 @@ spec:
   - nfsvers=4.1
   local:
     path: /kube-storage/adguard/conf
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - onode1
 
 ---
 apiVersion: v1
@@ -50,6 +58,14 @@ spec:
   - nfsvers=4.1
   local:
     path: /kube-storage/adguard/work
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - onode1
 
 ---
 apiVersion: v1
