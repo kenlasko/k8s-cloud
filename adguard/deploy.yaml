@@ -81,20 +81,20 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         volumeMounts:
-        - name: nfs-adguard-conf
+        - name: adguard-conf
           mountPath: /opt/adguardhome/conf
-        - name: nfs-adguard-work
+        - name: adguard-work
           mountPath: /opt/adguardhome/work
         - name: dns-wildcard-cert
           mountPath: /etc/certs
           readOnly: true
       volumes:
-      - name: nfs-adguard-conf
+      - name: adguard-conf
         persistentVolumeClaim:
-          claimName: nfs-adguard-conf
-      - name: nfs-adguard-work
+          claimName: adguard-conf
+      - name: adguard-work
         persistentVolumeClaim:
-          claimName: nfs-adguard-work
+          claimName: adguard-work
       - name: dns-wildcard-cert
         secret:
           secretName: dns-wildcard-cert
