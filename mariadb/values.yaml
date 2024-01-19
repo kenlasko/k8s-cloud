@@ -50,13 +50,14 @@ primary:
   sidecars:
   - name: cloud-mariadb-ts
     imagePullPolicy: Always
-    automountServiceAccountToken: true
     image: "ghcr.io/tailscale/tailscale:latest"
     env:
       # Store the state in a k8s secret
     - name: TS_HOSTNAME
       value: "cloud-mariadb"
     - name: TS_KUBE_SECRET
+      value: ""
+    - name: KUBERNETES_SERVICE_HOST
       value: ""
     - name: TS_USERSPACE
       value: "false"
