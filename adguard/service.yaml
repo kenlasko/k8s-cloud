@@ -29,7 +29,7 @@ spec:
   loadBalancerIP: 10.0.0.153
   ports:
   - name: dns-tls-853
-    nodePort: 32725
+    nodePort: 32700
     port: 853
     protocol: TCP
     targetPort: dns-tls-853
