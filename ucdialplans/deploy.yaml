@@ -32,10 +32,10 @@ spec:
             - all
         resources:
           requests:
-            cpu: 1000m
+            cpu: 700m
             memory: 1200Mi
           limits:
-            cpu: 1000m
+            cpu: 700m
             memory: 1200Mi
         volumeMounts:
         - name: ucdialplans-webconfig
