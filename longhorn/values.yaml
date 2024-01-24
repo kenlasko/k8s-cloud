@@ -1,0 +1,11 @@
+defaultSettings:
+  restoreVolumeRecurringJobs: true
+  systemManagedComponentsNodeSelector: storage:longhorn
+
+persistence:
+  defaultClassReplicaCount: 1
+  
+helmPreUpgradeCheckerJob:
+  enabled: false
+
+namespaceOverride: "longhorn"
