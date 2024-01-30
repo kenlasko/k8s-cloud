@@ -4,8 +4,11 @@ global:
     defaultDenyIngress: true
 
 configs:
+  secret:
+    createSecret: true
   params:
     server.insecure: true
+    server.secretkey: ***REMOVED***
   cm: 
     create: false # Don't create configmap because I do it separately via 02-repoconfig.yaml
   repositories:
