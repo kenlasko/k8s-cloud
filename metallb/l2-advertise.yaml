@@ -6,7 +6,4 @@ metadata:
 spec:
   ipAddressPools:
   - first-pool
-  nodeSelectors:
-  - matchExpressions:
-    - key: node-role.kubernetes.io/control-plane
-      operator: DoesNotExist
+
