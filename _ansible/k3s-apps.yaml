@@ -19,7 +19,7 @@
     kubernetes.core.helm:
       name: cilium
       chart_ref: cilium/cilium
-      chart_version: "1.14.3"
+      chart_version: "1.14.6"
       release_namespace: kube-system
       values_files:
       - /home/ubuntu/k3s-cloud/cilium/values.yaml
@@ -49,12 +49,11 @@
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ubuntu/k3s-cloud/argocd/01-secrets.yaml
+      src: /home/ubuntu/k3s-cloud/argocd/01-sealed-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ubuntu/k3s-cloud/argocd/02-ingress.yaml"
     - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
     - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
   - name: Apply Cilium resources
