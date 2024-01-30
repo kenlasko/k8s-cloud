@@ -5,6 +5,51 @@
   tasks:
   - name: Add node label to onode1
     shell: kubectl label nodes onode1 node-type=worker
+  - name: Add Sealed-Secrets chart repo
+    kubernetes.core.helm_repository:
+      name: bitnami-labs
+      repo_url: "https://bitnami-labs.github.io/sealed-secrets/"
+  - name: Deploy Sealed Secrets
+    kubernetes.core.helm:
+      name: sealed-secrets
+      chart_ref: bitnami-labs/sealed-secrets
+      create_namespace: false
+      release_namespace: kube-system
+      verify_ssl: no
+      values_files:
+      - /home/ken/k3s/sealed-secrets/values.yaml
+  - name: Check for existence of correct Sealed Secret base key
+    kubernetes.core.k8s_info:
+      api_version: v1
+      verify_ssl: no
+      kind: Secret
+      name: sealed-secrets-key5l82h
+      namespace: kube-system
+    register: sealed_secret_key
+  - name: Delete existing sealed secret private key
+    kubernetes.core.k8s:
+      state: absent
+      api_version: v1
+      verify_ssl: no
+      kind: Secret
+      namespace: kube-system
+      label_selectors: sealedsecrets.bitnami.com/sealed-secrets-key=active
+    when: sealed_secret_key.resources[0] is not defined 
+  - name: Restore private key for sealed secrets
+    kubernetes.core.k8s:
+      state: present
+      verify_ssl: no
+      src: /home/ubuntu/sealed-secrets-key.yaml
+    when: sealed_secret_key.resources[0] is not defined
+  - name: Delete sealed secret pod
+    kubernetes.core.k8s:
+      state: absent
+      api_version: v1
+      verify_ssl: no
+      kind: Pod
+      namespace: kube-system
+      label_selectors: app.kubernetes.io/name=sealed-secrets
+    when: sealed_secret_key.resources[0] is not defined
   - name: Add Traefik chart repo
     kubernetes.core.helm_repository:
       name: traefik
@@ -19,7 +64,7 @@
     kubernetes.core.helm:
       name: cilium
       chart_ref: cilium/cilium
-      chart_version: "1.14.3"
+      chart_version: "1.14.6"
       release_namespace: kube-system
       values_files:
       - /home/ubuntu/k3s-cloud/cilium/values.yaml
@@ -49,12 +94,11 @@
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ubuntu/k3s-cloud/argocd/01-secrets.yaml
+      src: /home/ubuntu/k3s-cloud/argocd/01-sealed-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ubuntu/k3s-cloud/argocd/02-ingress.yaml"
     - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
     - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
   - name: Apply Cilium resources
