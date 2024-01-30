@@ -9,9 +9,8 @@ collectors:
   containerd:
     enabled: true
     socket: /run/k3s/containerd/containerd.sock
-falco:
-  load_plugins:
-  - k8saudit
+  kubernetes:
+    enabled: true
   
 customRules:
   custom-rules.yaml: |-
@@ -30,17 +29,7 @@ customRules:
         - [cloudflare, cloudflare-tunnel, cloudflared]
         - [external-dns, external-dns, external-dns]
         - [headlamp, headlamp, headlamp-server]
-        - [intel-gpu, manager, intel_deviceplu]
-        - [longhorn, csi-attacher, csi-attacher]
-        - [longhorn, csi-provisioner, csi-provisioner]
-        - [longhorn, csi-resizer, csi-resizer]
-        - [longhorn, csi-snapshotter, csi-snapshotter]
-        - [longhorn, longhorn-admission-webhook, longhorn-manage]
-        - [longhorn, longhorn-manager, longhorn-manage]
-        - [longhorn, nightly-backups, longhorn-manage]
-        - [longhorn, 24-hour-snapshots, longhorn-manage]
         - [media-tools, backup-media-apps, kubectl]
-        - [metallb-system, speaker, speaker]
         - [monitoring, grafana-sc-dashboard, python]
         - [monitoring, grafana-sc-datasources, python]
         - [monitoring, prometheus, prometheus]
@@ -50,17 +39,8 @@ customRules:
         - [system-upgrade, system-upgrade-controller, system-upgrade-]
         - [tailscale, operator, operator]
         - [tailscale, tailscale, tailscaled]
-      append: true
-
-    - rule: Drop and execute new binary in container
-      exceptions:
-      - name: allowed_to_execute_new_binary
-        fields: [k8s.ns.name, container.name, proc.name] 
-        comps: [=,=,in]
-        values:
-        - [media-tools, plex, [CrashUploader, Plex Media Fing, Plex Media Scan, Plex Media Serv, Plex Script Hos, Plex Transcoder, Plex Tuner Serv]]
-        - [pihole, pihole, [pihole-FTL]]
-      append: true
+      override:
+        exceptions: append
 
     - rule: Clear Log Activities
       exceptions:
@@ -70,8 +50,8 @@ customRules:
         values:
         - [host, k3s-agent, containerd]
         - [host, k3s-server, containerd]
-        - [engine-manager, longhorn-instan, tee]
-      append: true
+      override:
+        exceptions: append
 
     - rule: Redirect STDOUT/STDIN to Network Connection in Container
       exceptions:
@@ -81,10 +61,8 @@ customRules:
         values:
         - [argocd, repo-server, [argocd-repo-ser, git]]
         - [gitea, gitea, [git]]
-        - [homeassist, homeassist, [busybox, git, ping, python3]]
-        - [longhorn, longhorn-manager, [longhorn, longhorn-manage]]
-        - [longhorn, engine-manager, [longhorn]]
-      append: true
+      override:
+        exceptions: append
 
     - rule: Run shell untrusted
       exceptions:
@@ -93,8 +71,8 @@ customRules:
         comps: [=,=,in]
         values:
         - [mariadb, mariadb-galera, [mysqld]]
-        - [pihole, pihole, [php-cgi, runuser, sudo]]
-      append: true
+      override:
+        exceptions: append
 
 falcosidekick:
   enabled: true
