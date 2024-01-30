@@ -17,7 +17,7 @@
       release_namespace: kube-system
       verify_ssl: no
       values_files:
-      - /home/ken/k3s/sealed-secrets/values.yaml
+      - ~/k3s-cloud/sealed-secrets/values.yaml
   - name: Check for existence of correct Sealed Secret base key
     kubernetes.core.k8s_info:
       api_version: v1
@@ -39,7 +39,7 @@
     kubernetes.core.k8s:
       state: present
       verify_ssl: no
-      src: /home/ubuntu/sealed-secrets-key.yaml
+      src: ~/sealed-secrets-key.yaml
     when: sealed_secret_key.resources[0] is not defined
   - name: Delete sealed secret pod
     kubernetes.core.k8s:
