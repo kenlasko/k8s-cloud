@@ -4,10 +4,6 @@
   become: true
   become_user: root
   tasks:
-  - name: Copy registries.yaml
-    ansible.builtin.copy:
-      src: /home/ken/k3s/_ansible/registries.yaml
-      dest: /etc/rancher/k3s/registries.yaml
   - name: Copy k3s.yaml to .kube/config
     ansible.builtin.fetch:
       src: /etc/rancher/k3s/k3s.yaml
