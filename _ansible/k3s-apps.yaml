@@ -54,20 +54,20 @@
     kubernetes.core.helm_repository:
       name: traefik
       repo_url: "https://helm.traefik.io/traefik"
-  # - name: Add Cilium chart repo
-  #   kubernetes.core.helm_repository:
-  #     name: cilium
-  #     repo_url: "https://helm.cilium.io/"
-  # - name: Deploy Cilium
-  #   environment:
-  #     KUBECONFIG: /home/ubuntu/.kube/config
-  #   kubernetes.core.helm:
-  #     name: cilium
-  #     chart_ref: cilium/cilium
-  #     chart_version: "1.14.6"
-  #     release_namespace: kube-system
-  #     values_files:
-  #     - /home/ubuntu/k3s-cloud/cilium/values.yaml
+  - name: Add Cilium chart repo
+    kubernetes.core.helm_repository:
+      name: cilium
+      repo_url: "https://helm.cilium.io/"
+  - name: Deploy Cilium
+    environment:
+      KUBECONFIG: /home/ubuntu/.kube/config
+    kubernetes.core.helm:
+      name: cilium
+      chart_ref: cilium/cilium
+      chart_version: "1.15.0"
+      release_namespace: kube-system
+      values_files:
+      - /home/ubuntu/k3s-cloud/cilium/values.yaml
   - name: Create Cloudflare namespace
     kubernetes.core.k8s:
       name: cloudflare
@@ -101,8 +101,8 @@
     with_fileglob:
     - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
     - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
-  # - name: Apply Cilium resources
-  #   kubernetes.core.k8s:
-  #     definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
-  #   with_fileglob:
-  #   - "/home/ubuntu/k3s-cloud/cilium/[a-u]*.yaml"
+  - name: Apply Cilium resources
+    kubernetes.core.k8s:
+      definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
+    with_fileglob:
+    - "/home/ubuntu/k3s-cloud/cilium/[a-u]*.yaml"
