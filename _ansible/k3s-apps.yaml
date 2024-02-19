@@ -64,7 +64,7 @@
     kubernetes.core.helm:
       name: cilium
       chart_ref: cilium/cilium
-      chart_version: "1.15.0"
+      chart_version: "1.15.1"
       release_namespace: kube-system
       values_files:
       - /home/ubuntu/k3s-cloud/cilium/values.yaml
