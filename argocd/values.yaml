@@ -91,3 +91,8 @@ configs:
       url: https://helm.traefik.io/traefik
       name: traefik
       type: helm
+    uptime-kuma:
+      url: https://k3rnelpan1c-dev.github.io/uptime-kuma-helm/
+      name: uptime-kuma
+      type: helm
+

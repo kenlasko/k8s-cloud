@@ -1,0 +1,18 @@
+persistence:
+  enabled: true
+  sizeLimit: 4Gi
+  storageClass: "local-path"
+  existingClaim: "uptime-kuma-pvc"
+  annotations: {}
+  labels: {}
+
+podSecurityContext: 
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
