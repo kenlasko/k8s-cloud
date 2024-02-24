@@ -1,8 +1,8 @@
 persistence:
   enabled: true
+  claimNameOverwrite: "uptime-kuma-pvc"
   sizeLimit: 4Gi
   storageClass: "local-path"
-  existingClaim: "uptime-kuma-pvc"
   annotations: {}
   labels: {}
 
