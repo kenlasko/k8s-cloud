@@ -32,11 +32,11 @@ spec:
             - all
         resources:
           requests:
-            cpu: 700m
-            memory: 1200Mi
+            cpu: 100m
+            memory: 300Mi
           limits:
-            cpu: 700m
-            memory: 1200Mi
+            cpu: 1000m
+            memory: 500Mi
         volumeMounts:
         - name: ucdialplans-webconfig
           mountPath: /var/www/web.config
