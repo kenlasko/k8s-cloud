@@ -1,7 +1,6 @@
 fullnameOverride: sealed-secrets-controller
 keyRenewPeriod: "0"  # Disable key recycling
 skipRecreate: true
-secretName: default-secret
 resources:
   limits: {}
   requests: {}
