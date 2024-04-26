@@ -20,7 +20,7 @@ metadata:
   annotations:
     tailscale.com/expose: 'true'
     tailscale.com/hostname: 'cloud-mariadb-access'
-  name: mariadb
+  name: mariadb-access
   namespace: mariadb
 spec:
   type: ClusterIP
