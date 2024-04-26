@@ -9,3 +9,25 @@ metadata:
 spec:
   externalName: mariadb-cloud-egress
   type: ExternalName
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mariadb
+  annotations:
+    tailscale.com/expose: 'true'
+    tailscale.com/hostname: 'cloud-mariadb-access'
+  name: mariadb
+  namespace: mariadb
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+    name: web
+  selector:
+    app: mariadb
