@@ -2,9 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    #tailscale.com/tailnet-ip: 100.93.161.159
     tailscale.com/expose: 'true'
-    tailscale.com/hostname: 'cloud-mariadb'
+    tailscale.com/hostname: 'cloud-mariadb.tailb7050.ts.net'
   name: cloud-tailscale-egress
 spec:
   externalName: mariadb-cloud-egress
@@ -19,7 +18,7 @@ metadata:
     app: mariadb
   annotations:
     tailscale.com/expose: 'true'
-    tailscale.com/hostname: 'cloud-mariadb-access'
+    tailscale.com/hostname: 'cloud-mariadb-access.tailb7050.ts.net'
   name: mariadb-access
   namespace: mariadb
 spec:
