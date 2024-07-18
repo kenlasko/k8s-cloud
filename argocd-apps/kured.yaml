@@ -7,7 +7,7 @@ spec:
   project: default
   sources:
   - repoURL: 'https://kubereboot.github.io/charts'
-    targetRevision: "*"
+    targetRevision: 5.4.5 #"*"
     chart: kured
     helm:
       valueFiles:
