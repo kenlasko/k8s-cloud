@@ -2,10 +2,10 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    tailscale.com/tailnet-ip: '100.79.70.119'
-  name: cloud-mariadb-egress
+    tailscale.com/tailnet-fqdn: 'home-mariadb.tailb7050.ts.net'
+  name: cloud-egress
 spec:
-  externalName: cloud-mariadb-egress
+  externalName: cloud-egress
   type: ExternalName
 
 
