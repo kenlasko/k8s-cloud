@@ -17,6 +17,12 @@ primary:
     limits:
       cpu: 500m
       memory: 600Mi
+  service:
+    type: LoadBalancer
+    loadBalancerClass: tailscale
+    annotations:
+      tailscale.com/expose: 'true'
+      tailscale.com/hostname: 'cloud-mariadb-service'
   configuration: |-
     [mysqld]
     skip-name-resolve
