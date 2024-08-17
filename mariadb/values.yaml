@@ -22,7 +22,7 @@ primary:
     loadBalancerClass: tailscale
     annotations:
       tailscale.com/expose: 'true'
-      tailscale.com/hostname: 'cloud-mariadb-service'
+      tailscale.com/hostname: 'cloud-mariadb'
   configuration: |-
     [mysqld]
     skip-name-resolve
