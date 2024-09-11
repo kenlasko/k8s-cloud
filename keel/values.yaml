@@ -15,7 +15,7 @@ secret:
 
 mail:
   enabled: true
-  from: "Keel Updates <keelupdates@ucdialplans.com>"
+  from: "Keel Cloud Updates <keelupdates@ucdialplans.com>"
   to: "ken.lasko@gmail.com"
   smtp:
     server: "smtp.sendgrid.net"
