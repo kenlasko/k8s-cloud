@@ -1,0 +1,24 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: postgres
+spec:
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 15Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: postgres-superuser
+  managed:
+    services:
+      additional:
+      - selectorType: rw
+        updateStrategy: patch
+        serviceTemplate:
+          metadata:
+            name: "postgres-service"
+            annotations:
+              tailscale.com/expose: 'true'
+              tailscale.com/hostname: 'cloud-postgres'
