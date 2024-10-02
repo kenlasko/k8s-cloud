@@ -22,3 +22,5 @@ spec:
             annotations:
               tailscale.com/expose: 'true'
               tailscale.com/hostname: 'cloud-postgres'
+          spec:
+            type: ClusterIP
