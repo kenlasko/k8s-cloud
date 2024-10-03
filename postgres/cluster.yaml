@@ -33,7 +33,7 @@ spec:
   externalClusters:
   - name: home-postgres
     connectionParameters:
-      host: postgres-cloud-egress
+      host: postgres-r
       user: streaming_replica
       sslmode: verify-full
       dbname: postgres
