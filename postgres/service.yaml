@@ -5,5 +5,5 @@ metadata:
     tailscale.com/tailnet-fqdn: 'home-postgres.tailb7050.ts.net'
   name: postgres-cloud-egress
 spec:
-  externalName: postgres-cloud-egress
+  externalName: cloud-egress
   type: ExternalName
