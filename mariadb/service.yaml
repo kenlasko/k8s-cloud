@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
     tailscale.com/tailnet-fqdn: 'home-mariadb.tailb7050.ts.net'
-  name: cloud-egress
+  name: mariadb-cloud-egress
 spec:
-  externalName: cloud-egress
+  externalName: mariadb-cloud-egress
   type: ExternalName
