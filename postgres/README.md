@@ -1,7 +1,7 @@
 # Configuring Replication from home PostgreSQL
 Before creating the cluster, you must first create a secret that contains the following:
-- tls.crt and tls.key from postgres-replication secret
-- ca.crt from postgres-ca
+- ```tls.crt``` and ```tls.key``` from ```postgres-replication``` secret
+- ```ca.crt``` from ```postgres-ca```
 All three can be in a single secret that looks like this:
 ```
 ---
