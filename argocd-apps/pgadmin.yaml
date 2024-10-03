@@ -1,26 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: netdata
+  name: pgadmin
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   sources:
-  - repoURL: 'https://netdata.github.io/helmchart/'
-    targetRevision: 3.*
-    chart: netdata 
+  - repoURL: 'https://helm.runix.net/'
+    targetRevision: "*"
+    chart: pgadmin4
     helm:
       valueFiles:
-      - $values/netdata/values.yaml
+      - $values/pgadmin/values.yaml
   - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
     ref: values
   - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
-    path: netdata
+    path: pgadmin
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: netdata
+    namespace: postgres
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: baseline
+        pod-security.kubernetes.io/enforce-version: latest
     automated:
       selfHeal: true
     syncOptions:

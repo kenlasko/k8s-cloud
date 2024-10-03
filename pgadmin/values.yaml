@@ -1,0 +1,27 @@
+containerSecurityContext:
+  enabled: true
+  allowPrivilegeEscalation: false
+existingSecret: postgres-passwords
+secretKeys:
+  pgadminPasswordKey: postgres-admin-pw
+env:
+  email: ken.lasko@gmail.com
+serverDefinitions:
+  enabled: true
+  servers:
+    firstServer: 
+      Name: "Postgres"
+      Group: "Servers"
+      Port: 5432
+      Username: postgres
+      Host: postgres-rw.postgres.svc.cluster.local
+      MaintenanceDB: "postgres"
+persistentVolume:
+  enabled: true
+  accessModes:
+  - ReadWriteOnce
+  size: 2Gi
+  storageClassName: "local-path"
+  existingClaim: pgadmin-pvc
+containerSecurityContext:
+  enabled: true
