@@ -3,6 +3,12 @@ global:
     create: false
     defaultDenyIngress: true
 
+server:
+  service:
+    annotations:
+      tailscale.com/expose: 'true'
+      tailscale.com/hostname: 'cloud-argocd'
+
 configs:
   secret:
     createSecret: true
