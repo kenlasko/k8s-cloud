@@ -33,3 +33,7 @@ hubble:
     enabled: true
   ui:
     enabled: true
+    service:
+      annotations:
+        tailscale.com/expose: 'true'
+        tailscale.com/hostname: 'cloud-hubble'        
