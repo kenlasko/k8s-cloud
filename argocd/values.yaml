@@ -1,7 +1,7 @@
 global:
   networkPolicy:
     create: false
-    defaultDenyIngress: true
+    defaultDenyIngress: false
 
 server:
   service:
