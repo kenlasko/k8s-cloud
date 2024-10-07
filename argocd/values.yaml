@@ -1,7 +1,5 @@
 global:
-  networkPolicy:
-    create: false
-    defaultDenyIngress: false
+  domain: cloud-argocd.ucdialplans.com
 
 server:
   service:
