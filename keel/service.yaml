@@ -1,10 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: keel
   name: keel-frontend
   namespace: kube-system
+  labels:
+    app: keel
+  annotations:
+    tailscale.com/expose: 'true'
+    tailscale.com/hostname: 'cloud-keel'
 spec:
   type: ClusterIP
   ports:
