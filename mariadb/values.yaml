@@ -16,7 +16,7 @@ primary:
       memory: 300Mi
     limits:
       cpu: 500m
-      memory: 600Mi
+      memory: 800Mi
   configuration: |-
     [mysqld]
     skip-name-resolve
