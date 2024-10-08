@@ -1,3 +1,4 @@
+featureGates: "ExperimentalGatewayAPISupport=true"
 installCRDs: true
 livenessProbe:
   enabled: true
