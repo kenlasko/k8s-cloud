@@ -36,4 +36,11 @@ hubble:
     service:
       annotations:
         tailscale.com/expose: 'true'
-        tailscale.com/hostname: 'cloud-hubble'        
+        tailscale.com/hostname: 'cloud-hubble'     
+
+gatewayAPI:
+  enabled: true
+  secretsNamespace:
+    create: false
+    name: kube-system
+    sync: true   
