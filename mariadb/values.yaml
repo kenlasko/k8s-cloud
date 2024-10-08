@@ -11,8 +11,6 @@ primary:
     storageClass: "local-path"
     existingClaim: "mariadb-pvc"
   service:
-    type: LoadBalancer
-    externalTrafficPolicy: Cluster
     annotations:
       tailscale.com/expose: 'true'
       tailscale.com/hostname: 'cloud-mariadb'
