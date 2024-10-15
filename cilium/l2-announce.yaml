@@ -4,11 +4,5 @@ metadata:
   name: default-l2-announce
   namespace: kube-system
 spec:
-  nodeSelector:
-    matchExpressions:
-    - key: node-role.kubernetes.io/control-plane
-      operator: In 
-      values:
-      - "true"
   externalIPs: true
   loadBalancerIPs: true
