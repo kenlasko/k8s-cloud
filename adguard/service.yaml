@@ -30,7 +30,7 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  loadBalancerIP: 10.0.0.171
+  loadBalancerIP: 10.0.0.53
   ports:
   - name: dns-tls-853
     nodePort: 32700
