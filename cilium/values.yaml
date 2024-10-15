@@ -1,21 +1,24 @@
 rollOutCiliumPods: true
-routingMode: native             # Original
-# routingMode: tunnel               # New
-# tunnelProtocol: geneve            # New
+# routingMode: native             # Original
+routingMode: tunnel               # New
+tunnelProtocol: geneve            # New
 ipv4NativeRoutingCIDR: 10.0.0.0/9
-autoDirectNodeRoutes: true      # Original
+# autoDirectNodeRoutes: true      # Original
 # tunnel: disabled                # Original
 bpf:
   hostRouting: true
   masquerade: true
 ipam:
   mode: kubernetes
+  operator:
+    clusterPoolIPv4PodCIDRList: 
+    - 10.42.0.0/16
 cluster:
   name: cloud
   id: 1
-# loadBalancer:                     # New
-#   mode: dsr                       # New
-#   dsrDispatch: geneve             # New
+loadBalancer:                     # New
+  mode: dsr                       # New
+  dsrDispatch: geneve             # New
 l2announcements:
   enabled: true
   leaseDuration: 6s
