@@ -4,6 +4,7 @@ metadata:
   name: vaultwarden-ui
   namespace: vaultwarden
   labels:
+    tailscale.com/proxy-class: "enable-tun"
     app: vaultwarden
   annotations:
     tailscale.com/expose: 'true'

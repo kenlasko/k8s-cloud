@@ -5,6 +5,7 @@ metadata:
   namespace: adguard
   labels:
     app: adguard
+    tailscale.com/proxy-class: "enable-tun"
   annotations:
     tailscale.com/expose: 'true'
     tailscale.com/hostname: 'cloud-adguard'
