@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: letsencrypt-wildcard-cert
-  namespace: kube-system
+  namespace: cilium
 spec:
   dnsNames:
   - '*.ucdialplans.com'
