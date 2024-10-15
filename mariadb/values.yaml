@@ -6,13 +6,13 @@ serviceAccount:
   automountServiceAccountToken: true
 auth:
   existingSecret: mariadb-passwords
+commonLabels:
+  tailscale.com/proxy-class: 'enable-tun'
 primary:
   persistence:
     storageClass: 'local-path'
     existingClaim: 'mariadb-pvc'
   service:
-    labels:
-      tailscale.com/proxy-class: 'enable-tun'
     annotations:
       tailscale.com/expose: 'true'
       tailscale.com/hostname: 'cloud-mariadb'
