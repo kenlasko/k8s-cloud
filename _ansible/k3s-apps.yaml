@@ -1,29 +1,37 @@
 ---
 # Installs the base apps (Cilium, Traefik, ArgoCD) to get started with installing all other apps
-# Run after k3s-node-* playbooks
 - hosts: workstation
   tasks:
-  - name: Add node label to onode1
-    shell: kubectl label nodes onode1 node-type=worker
   - name: Install default sealed secrets certificate
     kubernetes.core.k8s:
       state: present
       verify_ssl: no
-      src: /home/ubuntu/default-sealing-key.yaml
+      src: /home/ken/default-sealing-key.yaml
+  - name: Install original sealed secrets certificate
+    kubernetes.core.k8s:
+      state: present
+      verify_ssl: no
+      src: /home/ken/global-sealed-secrets-key.yaml
   - name: Add Cilium chart repo
     kubernetes.core.helm_repository:
       name: cilium
       repo_url: "https://helm.cilium.io/"
+  - name: Apply Gateway API CRDs
+    kubernetes.core.k8s:
+      state: present
+      src: /home/ken/k3s-cloud/cilium/gateway-api-crds.yaml  
   - name: Deploy Cilium
     environment:
-      KUBECONFIG: /home/ubuntu/.kube/config
+      KUBECONFIG: /home/ken/.kube/config
     kubernetes.core.helm:
       name: cilium
       chart_ref: cilium/cilium
-      chart_version: "1.15.1"
-      release_namespace: kube-system
+      chart_version: "1.16.2"
+      release_namespace: cilium
+      create_namespace: true
+      update_repo_cache: true
       values_files:
-      - /home/ubuntu/k3s-cloud/cilium/values.yaml
+      - /home/ken/k3s-cloud/cilium/values.yaml
   - name: Add Sealed-Secrets chart repo
     kubernetes.core.helm_repository:
       name: bitnami-labs
@@ -36,18 +44,26 @@
       release_namespace: kube-system
       verify_ssl: no
       values_files:
-      - /home/ubuntu/k3s-cloud/sealed-secrets/values.yaml
-  - name: Create Cloudflare namespace
-    kubernetes.core.k8s:
-      name: cloudflare
-      api_version: v1
-      kind: Namespace
-      state: present
-  - name: Install Cloudflared
+      - /home/ken/k3s-cloud/sealed-secrets/values.yaml
+  - name: Add Cert-Manager chart repo
+    kubernetes.core.helm_repository:
+      name: cert-manager
+      repo_url: "https://charts.jetstack.io"
+      force_update: true
+  - name: Deploy Cert-Manager
+    kubernetes.core.helm:
+      name: cert-manager
+      chart_ref: cert-manager/cert-manager
+      create_namespace: true
+      release_namespace: cert-manager
+      values_files:
+      - /home/ken/k3s-cloud/cert-manager/values.yaml
+  - name: Apply Cert-Manager resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ubuntu/k3s-cloud/cloudflare-tunnel/*.yaml"
+    - "/home/ken/k3s-cloud/cert-manager/cloudflare-cert.yaml"
+    - "/home/ken/k3s-cloud/cert-manager/sealed-secrets.yaml"
   - name: Add ArgoCD chart repo
     kubernetes.core.helm_repository:
       name: argocd
@@ -59,19 +75,23 @@
       create_namespace: true
       release_namespace: argocd
       values_files:
-      - /home/ubuntu/k3s-cloud/argocd/values.yaml
+      - /home/ken/k3s-cloud/argocd/values.yaml
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ubuntu/k3s-cloud/argocd/01-sealed-secrets.yaml
+      src: /home/ken/k3s-cloud/argocd/sealed-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ubuntu/k3s-cloud/argocd/02-repoconfig.yaml"
-    - "/home/ubuntu/k3s-cloud/argocd/[a-u]*.yaml"
+    - "/home/ken/k3s-cloud/argocd/[a-h]*.yaml"
+    ignore_errors: true
+  - name: Apply Cilium gateways
+    kubernetes.core.k8s:
+      state: present
+      src: /home/ken/k3s-cloud/cilium/gateway.yaml
   - name: Apply Cilium resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ubuntu/k3s-cloud/cilium/[a-u]*.yaml"
+    - "/home/ken/k3s-cloud/cilium/[h-l]*.yaml"

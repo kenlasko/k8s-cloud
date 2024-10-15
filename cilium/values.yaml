@@ -1,46 +1,81 @@
-k8sServiceHost: 127.0.0.1
-k8sServicePort: 6444
-routingMode: native
+rollOutCiliumPods: true
+# routingMode: native             # Original
+routingMode: tunnel               # New
+tunnelProtocol: geneve            # New
 ipv4NativeRoutingCIDR: 10.0.0.0/9
-autoDirectNodeRoutes: true
-tunnel: disabled
+# autoDirectNodeRoutes: true      # Original
+# tunnel: disabled                # Original
 bpf:
   hostRouting: true
   masquerade: true
 ipam:
   mode: kubernetes
-  operator:
-    clusterPoolIPv4PodCIDRList: 
-    - 10.42.0.0/16
-k8sClientRateLimit:
-  qps: 5
-  burst: 10
 cluster:
-  name: cloud
-  id: 1
-operator: 
-  replicas: 1
+  name: home
+  id: 0
+loadBalancer:                     # New
+  mode: dsr                       # New
+  dsrDispatch: geneve             # New
 l2announcements:
   enabled: true
-  leaseDuration: 30s
-  leaseRenewDeadline: 10s
-  leaseRetryPeriod: 4s
+  leaseDuration: 6s
+  leaseRenewDeadline: 2s
+  leaseRetryPeriod: 200ms
+operator:
+  replicas: 1
+envoy:
+  enabled: false
+  rollOutPods: true
 externalIPs:
   enabled: true
+extraEnv:
+- name: TZ
+  value: "America/Toronto"
 kubeProxyReplacement: true
+k8sServiceHost: localhost
+k8sServicePort: 7445  # Needs to be 7445 for Talos
+## This is for Talos
+securityContext:
+  capabilities:
+    ciliumAgent: 
+    - CHOWN
+    - KILL
+    - NET_ADMIN
+    - NET_RAW 
+    - IPC_LOCK
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - DAC_OVERRIDE
+    - FOWNER
+    - SETGID
+    - SETUID
+    cleanCiliumState: 
+    - NET_ADMIN
+    - SYS_ADMIN
+    - SYS_RESOURCE
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+resources:
+  requests:
+    cpu: 100m
+    memory: 250Mi
+  limits:
+    cpu: 400m
+    memory: 400Mi
+
 hubble:
+  peerService:
+    clusterDomain: cluster.local
   relay:
     enabled: true
+    resources:
+      requests:
+        cpu: 15m
+        memory: 25Mi
+      limits:
+        cpu: 50m
+        memory: 50Mi   
   ui:
     enabled: true
-    service:
-      annotations:
-        tailscale.com/expose: 'true'
-        tailscale.com/hostname: 'cloud-hubble'     
-
-gatewayAPI:
-  enabled: true
-  secretsNamespace:
-    create: false
-    name: kube-system
-    sync: true   
