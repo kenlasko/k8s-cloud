@@ -8,9 +8,11 @@ auth:
   existingSecret: mariadb-passwords
 primary:
   persistence:
-    storageClass: "local-path"
-    existingClaim: "mariadb-pvc"
+    storageClass: 'local-path'
+    existingClaim: 'mariadb-pvc'
   service:
+    labels:
+      tailscale.com/proxy-class: 'enable-tun'
     annotations:
       tailscale.com/expose: 'true'
       tailscale.com/hostname: 'cloud-mariadb'
