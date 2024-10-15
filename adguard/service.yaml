@@ -34,6 +34,16 @@ spec:
   externalTrafficPolicy: Cluster
   loadBalancerIP: 10.0.0.153
   ports:
+  - name: dns-tcp
+    nodePort: 30725
+    port: 53
+    protocol: TCP
+    targetPort: dns-tcp
+  - name: dns-udp
+    nodePort: 30725
+    port: 53
+    protocol: UDP
+    targetPort: dns-udp
   - name: dns-tls-853
     nodePort: 32700
     port: 853
