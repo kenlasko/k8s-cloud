@@ -1,28 +1,25 @@
-# Select the MariaDB pod on NUC6 and go to command prompt:
+# Setup Replication
+## Primary DB Backup
+1. Select the MariaDB pod on one of NUC4-6 and go to command prompt:
+```
 mariadb -u root -p$MARIADB_ROOT_PASSWORD
+```
+```
 flush tables with read lock;
 show variables like 'gtid_binlog_pos';  
+```
+2. Take results from above and set `gtid_slave_pos` for replication config on other hosts. **DO NOT CLOSE WINDOW!**
 
-# Take results from above and set gtid_slave_pos for last step
+3. Run `mariadb-backup` job on `mariadb` namespace
 
-# From another window on same cluster member:
-mariadb-dump -h mariadb.mariadb.svc.cluster.local -u root -p$MARIADB_ROOT_PASSWORD -B gitea homeassist phpmyadmin ucdialplans vaultwarden > /bitnami/mariadb/data/mariadb-backup.sql
-
-# Once done, then unlock from first:
+4. Once done, then unlock tables from first window:
+```
 unlock tables;
+```
+5. Connect to NAS01 and rename `/share/backup/mariadb/mariadb-backup-<dayofweek>.sql` to `mariadb-backup.sql`
 
-# From KenPC 
-Copy backup from NUC6 to ONode1 /home/ubuntu/mariadb-repl-backup.sql
-
-# From ONode1
-```
-mv /home/ubuntu/mariadb-backup.sql /var/mariadb/
-```
-
-# Then on Onode1 mariadb pod command prompt:
-```
-mariadb -u root -p$MARIADB_ROOT_PASSWORD
-```
+## MariaDB Cloud Setup
+1. If replication was previously enabled on cloud, run:
 ```
 stop slave;
 drop database gitea;
@@ -32,19 +29,16 @@ drop database vaultwarden;
 drop database phpmyadmin;
 ```
 
-# Exit to prompt and run
-```
-mariadb -u root -p$MARIADB_ROOT_PASSWORD < /bitnami/mariadb/mariadb-backup.sql
-```
+2. Run `mariadb-restore` from `mariadb` namespace.
 
-# Then run 
+3. Connect to MariaDB pod and run:
 ```
 mariadb -u root -p$MARIADB_ROOT_PASSWORD
 ```
 ```
 set global gtid_slave_pos = "0-1-19420";
 change master to
-    master_host='cloud-egress',
+    master_host='mariadb.mariadb.svc.cluster.local',
     master_user='replicator',
     master_password='***REMOVED***',
     master_port=3306,
@@ -54,12 +48,8 @@ change master to
 start slave;
 ```
 
-# Check status
-```
-show slave status;
-```
-
-# If you get replication errors, try skipping the error and continuing:
+## Replication Errors?
+If you get replication errors, try skipping the error and continuing:
 ```
 STOP SLAVE;
 SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1;
