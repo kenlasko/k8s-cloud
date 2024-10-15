@@ -5,6 +5,7 @@ metadata:
   namespace: kube-system
   labels:
     app: keel
+    tailscale.com/proxy-class: "enable-tun"
   annotations:
     tailscale.com/expose: 'true'
     tailscale.com/hostname: 'cloud-keel'
