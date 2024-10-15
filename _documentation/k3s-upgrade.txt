@@ -1,1 +1,0 @@
-curl -sfL https://get.k3s.io | K3S_TOKEN=***REMOVED*** sh -s - server --disable servicelb,traefik,local-storage --write-kubeconfig-mode 644 --disable-cloud-controller
