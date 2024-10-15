@@ -1,0 +1,10 @@
+global:
+  fullnameOverride: "smarter-device-manager"
+config: |
+  - devicematch: ^*tun$
+    nummaxdevices: 10
+securityContext:
+  capabilities:
+    drop: ["ALL"]
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
