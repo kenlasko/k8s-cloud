@@ -28,10 +28,10 @@ drop database ucdialplans;
 drop database vaultwarden;
 drop database phpmyadmin;
 ```
+2. Enable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
+3. Run `mariadb-restore` from `mariadb` namespace.
 
-2. Run `mariadb-restore` from `mariadb` namespace.
-
-3. Connect to MariaDB pod and run:
+4. Connect to MariaDB pod and run:
 ```
 mariadb -u root -p$MARIADB_ROOT_PASSWORD
 ```
@@ -47,6 +47,8 @@ change master to
 
 start slave;
 ```
+
+5. Disable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
 
 ## Replication Errors?
 If you get replication errors, try skipping the error and continuing:
