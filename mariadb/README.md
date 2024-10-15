@@ -16,7 +16,7 @@ Copy backup from NUC6 to ONode1 /home/ubuntu/mariadb-repl-backup.sql
 
 # From ONode1
 ```
-mv /home/ubuntu/mariadb-backup.sql /kube-storage/mariadb/
+mv /home/ubuntu/mariadb-backup.sql /var/mariadb/
 ```
 
 # Then on Onode1 mariadb pod command prompt:

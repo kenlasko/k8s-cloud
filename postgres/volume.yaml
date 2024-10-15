@@ -11,7 +11,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/postgres"
+    path: "/var/postgres"
   nodeAffinity:
     required:
       nodeSelectorTerms:

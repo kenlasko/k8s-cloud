@@ -11,7 +11,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/alertmanager"
+    path: "/var/alertmanager"
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -35,7 +35,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/grafana"
+    path: "/var/grafana"
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -59,7 +59,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/prometheus"
+    path: "/var/prometheus"
   nodeAffinity:
     required:
       nodeSelectorTerms:

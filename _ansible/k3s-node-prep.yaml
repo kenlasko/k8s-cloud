@@ -28,7 +28,7 @@
       file:
         path: /kube-storage
         state: directory
-    - name: Create /kube-storage/mariadb folder
+    - name: Create /var/mariadb folder
       file:
-        path: /kube-storage/mariadb
+        path: /var/mariadb
         state: directory

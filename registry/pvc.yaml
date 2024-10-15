@@ -24,7 +24,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/registry"
+    path: "/var/registry"
   nodeAffinity:
     required:
       nodeSelectorTerms:

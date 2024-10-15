@@ -24,7 +24,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/pgadmin"
+    path: "/var/pgadmin"
   nodeAffinity:
     required:
       nodeSelectorTerms:

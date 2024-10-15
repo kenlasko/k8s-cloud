@@ -11,7 +11,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/uptime-kuma"
+    path: "/var/uptime-kuma"
   nodeAffinity:
     required:
       nodeSelectorTerms:

@@ -24,7 +24,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/vaultwarden"
+    path: "/var/vaultwarden"
   nodeAffinity:
     required:
       nodeSelectorTerms:

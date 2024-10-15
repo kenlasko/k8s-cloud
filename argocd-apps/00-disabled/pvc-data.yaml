@@ -24,7 +24,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/kube-storage/nectar/activecount"
+    path: "/var/nectar/activecount"
   nodeAffinity:
     required:
       nodeSelectorTerms:

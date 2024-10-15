@@ -14,7 +14,7 @@ spec:
   - hard
   - nfsvers=4.1
   local:
-    path: /kube-storage/adguard/conf
+    path: /var/adguard/conf
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -57,7 +57,7 @@ spec:
   - hard
   - nfsvers=4.1
   local:
-    path: /kube-storage/adguard/work
+    path: /var/adguard/work
   nodeAffinity:
     required:
       nodeSelectorTerms:
