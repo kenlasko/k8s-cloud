@@ -18,7 +18,7 @@
     "imageCapabilityData": null,
     "imageCapsFormatVersion": null,
     "operatingSystem": "Talos",
-    "operatingSystemVersion": "1.7.6",
+    "operatingSystemVersion": "1.8.1",
     "additionalMetadata": {
         "shapeCompatibilities": [
             {
