@@ -38,7 +38,7 @@ mariadb -u root -p$MARIADB_ROOT_PASSWORD
 ```
 set global gtid_slave_pos = "0-1-19420";
 change master to
-    master_host='mariadb.mariadb.svc.cluster.local',
+    master_host='cloud-egress',
     master_user='replicator',
     master_password='***REMOVED***',
     master_port=3306,
