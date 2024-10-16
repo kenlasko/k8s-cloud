@@ -33,7 +33,6 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
-  loadBalancerIP: 10.0.0.153
   ports:
   - name: dns-tcp
     nodePort: 30725
