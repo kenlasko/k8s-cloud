@@ -12,26 +12,26 @@
       state: present
       verify_ssl: no
       src: /home/ken/global-sealed-secrets-key.yaml
-  - name: Add Cilium chart repo
-    kubernetes.core.helm_repository:
-      name: cilium
-      repo_url: "https://helm.cilium.io/"
-  - name: Apply Gateway API CRDs
-    kubernetes.core.k8s:
-      state: present
-      src: /home/ken/k3s-cloud/cilium/gateway-api-crds.yaml  
-  - name: Deploy Cilium
-    environment:
-      KUBECONFIG: /home/ken/.kube/config
-    kubernetes.core.helm:
-      name: cilium
-      chart_ref: cilium/cilium
-      chart_version: "1.16.2"
-      release_namespace: cilium
-      create_namespace: true
-      update_repo_cache: true
-      values_files:
-      - /home/ken/k3s-cloud/cilium/values.yaml
+  # - name: Add Cilium chart repo
+  #   kubernetes.core.helm_repository:
+  #     name: cilium
+  #     repo_url: "https://helm.cilium.io/"
+  # - name: Apply Gateway API CRDs
+  #   kubernetes.core.k8s:
+  #     state: present
+  #     src: /home/ken/k3s-cloud/cilium/gateway-api-crds.yaml  
+  # - name: Deploy Cilium
+  #   environment:
+  #     KUBECONFIG: /home/ken/.kube/config
+  #   kubernetes.core.helm:
+  #     name: cilium
+  #     chart_ref: cilium/cilium
+  #     chart_version: "1.16.2"
+  #     release_namespace: cilium
+  #     create_namespace: true
+  #     update_repo_cache: true
+  #     values_files:
+  #     - /home/ken/k3s-cloud/cilium/values.yaml
   - name: Add Sealed-Secrets chart repo
     kubernetes.core.helm_repository:
       name: bitnami-labs
@@ -86,12 +86,12 @@
     with_fileglob:
     - "/home/ken/k3s-cloud/argocd/[a-h]*.yaml"
     ignore_errors: true
-  - name: Apply Cilium gateways
-    kubernetes.core.k8s:
-      state: present
-      src: /home/ken/k3s-cloud/cilium/gateway.yaml
-  - name: Apply Cilium resources
-    kubernetes.core.k8s:
-      definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
-    with_fileglob:
-    - "/home/ken/k3s-cloud/cilium/[h-l]*.yaml"
+  # - name: Apply Cilium gateways
+  #   kubernetes.core.k8s:
+  #     state: present
+  #     src: /home/ken/k3s-cloud/cilium/gateway.yaml
+  # - name: Apply Cilium resources
+  #   kubernetes.core.k8s:
+  #     definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
+  #   with_fileglob:
+  #   - "/home/ken/k3s-cloud/cilium/[h-l]*.yaml"
