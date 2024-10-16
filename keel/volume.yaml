@@ -12,3 +12,11 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   local:
     path: "/var/keel"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - onode1
