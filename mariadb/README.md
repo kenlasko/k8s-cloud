@@ -31,7 +31,7 @@ drop database phpmyadmin;
 2. Enable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
 3. Run `mariadb-restore` from `mariadb` namespace.
 
-4. Connect to MariaDB pod and run:
+4. Connect to MariaDB pod and run (or do it from PHPMyAdmin):
 ```
 mariadb -u root -p$MARIADB_ROOT_PASSWORD
 ```
