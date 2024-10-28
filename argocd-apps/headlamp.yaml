@@ -17,6 +17,18 @@ spec:
   - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
     path: headlamp
     targetRevision: HEAD
+  # Define patches to add annotations
+  patches:
+  - patch: |
+      metadata:
+        annotations:
+          tailscale.com/expose: 'true'
+          tailscale.com/hostname: 'cloud-uptimekuma'
+    target:
+      group: ""
+      version: v1
+      kind: Service
+      name: headlamp  # Replace with your service name
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: headlamp
