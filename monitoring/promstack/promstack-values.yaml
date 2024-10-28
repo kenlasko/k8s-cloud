@@ -47,15 +47,14 @@ alertmanager:
       repeat_interval: 4h
       receiver: 'null'
       routes:
-      - receiver: 'ken-gmail'
-        matchers:
-        - severity = "warning"
-        continue: true
       - receiver: 'slack-webhook'
         matchers:
         - severity = "warning"
         continue: false
-
+      - receiver: 'ken-gmail'
+        matchers:
+        - severity = "warning"
+        continue: false
     receivers:
     - name: 'null'
     - name: ken-gmail
