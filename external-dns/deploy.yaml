@@ -51,6 +51,7 @@ spec:
         - secretRef:
             name: adguard-creds
         args:
+        - --txt-owner-id=cloud
         - --source=service
         - --source=gateway-httproute
         - --source=gateway-tlsroute
