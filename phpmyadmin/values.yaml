@@ -1,3 +1,9 @@
 db:
   host: ""
   allowArbitraryServer: false
+commonLabels:
+  tailscale.com/proxy-class: "enable-tun"
+service:
+  annotations:
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: "cloud-phpmyadmin"

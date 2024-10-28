@@ -17,6 +17,17 @@ spec:
   - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
     path: headlamp
     targetRevision: HEAD
+  patches:
+    - target:
+        kind: Service
+        name: headlamp # Replace with your service name
+      patch: |
+        apiVersion: v1
+        kind: Service
+        metadata:
+          annotations:
+            tailscale.com/expose: 'true'
+            tailscale.com/hostname: 'cloud-headlamp'
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: headlamp
