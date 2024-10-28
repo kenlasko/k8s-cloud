@@ -127,3 +127,10 @@ hubble:
           RxBMRwM0fn8Bl7paHUlDjWkkp6u0wPwUYAOVNoLMRmLy4hMhkXXK6E/OFlhda9vwQjOjWI7vkVTT
           8eFEZiZLRLTJjnnhB5SkIce/iLbHpwU7MmCqfayHRezwksrGh+rFLf55e/P7J/zhz0U/88P1Hh+r
           p78d8aejjze/Pb78qt1+g5Kcjj9VIVfj6u0+/n9VwV/Mvv8HuUF42VkTAAA=
+
+gatewayAPI:
+  enabled: true
+  secretsNamespace:
+    create: false
+    name: cilium
+    sync: true
