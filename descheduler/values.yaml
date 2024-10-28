@@ -1,0 +1,13 @@
+schedule: "30 */2 * * *"  # Every hour at 30 min past
+priorityClassName: high-priority
+deschedulerPolicy:
+  nodeSelector: "storage=longhorn"
+  strategies:
+    RemoveDuplicates:
+      enabled: true
+    RemovePodsHavingTooManyRestarts:
+      enabled: true
+      params:
+        podsHavingTooManyRestarts:
+          podRestartThreshold: 10
+          includingInitContainers: true
