@@ -7,9 +7,9 @@ patches:
       kind: Service
       name: headlamp
     patch: |-
-    metadata:
-      labels:
-        tailscale.com/proxy-class: "enable-tun"
-      annotations:
-        tailscale.com/expose: 'true'
-        tailscale.com/hostname: 'cloud-headlamp'
+      metadata:
+        labels:
+          tailscale.com/proxy-class: "enable-tun"
+        annotations:
+          tailscale.com/expose: 'true'
+          tailscale.com/hostname: 'cloud-headlamp'
