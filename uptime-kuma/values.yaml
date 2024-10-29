@@ -6,6 +6,10 @@ persistence:
   annotations: {}
   labels: {}
 
+service:
+  labels:
+    tailscale.com/proxy-class: enable-tun
+
 podSecurityContext: 
   fsGroup: 2000
 
