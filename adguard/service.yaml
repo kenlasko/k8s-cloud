@@ -27,12 +27,12 @@ metadata:
     app: adguard
   name: adguard-dns
   namespace: adguard
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 10.0.0.153
-    io.cilium/lb-ipam-ips: 10.0.0.153
+  # annotations:
+  #   metallb.universe.tf/loadBalancerIPs: 10.0.0.153
+  #   io.cilium/lb-ipam-ips: 10.0.0.153
 spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  type: ClusterIP
+  # externalTrafficPolicy: Cluster
   ports:
   - name: dns-tcp
     nodePort: 30725
