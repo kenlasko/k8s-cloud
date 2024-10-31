@@ -45,6 +45,7 @@ k8sServiceHost: localhost
 k8sServicePort: 7445  # Needs to be 7445 for Talos
 ## This is for Talos
 securityContext:
+  privileged: true
   capabilities:
     ciliumAgent: 
     - CHOWN
