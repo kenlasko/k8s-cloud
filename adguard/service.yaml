@@ -9,6 +9,7 @@ metadata:
   annotations:
     tailscale.com/expose: 'true'
     tailscale.com/hostname: 'cloud-adguard'
+    external-dns.alpha.kubernetes.io/target: 'onode1.ucdialplans.com'
 spec:
   type: ClusterIP
   ports:
