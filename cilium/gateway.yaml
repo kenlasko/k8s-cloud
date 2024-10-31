@@ -3,11 +3,12 @@ kind: Gateway
 metadata:
   name: tls
   namespace: cilium
+  annotations:
+    external-dns.alpha.kubernetes.io/target: 'onode1.ucdialplans.com'
 spec:
   gatewayClassName: cilium
-  infrastructure:
-    annotations:
-      external-dns.alpha.kubernetes.io/target: 'onode1.ucdialplans.com'
+  # infrastructure:
+
   listeners:
   - name: http
     protocol: HTTP
