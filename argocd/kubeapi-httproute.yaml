@@ -9,15 +9,15 @@ metadata:
   namespace: kube-system
 spec:
   parentRefs:
-  - name: kubeapi
+  - name: tls
     namespace: cilium
     sectionName: https
   hostnames:
   - "cloud-kube.ucdialplans.com"
   rules:
   - backendRefs:
-    - name: kubeapi
-      namespace: kube-system
+    - name: kubernetes
+      namespace: default
       group: ""
       kind: Service
       port: 443
