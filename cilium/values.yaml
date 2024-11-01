@@ -29,7 +29,7 @@ l2announcements:
 operator:
   replicas: 1
 envoy:
-  enabled: true
+  enabled: false
   rollOutPods: true
   securityContext:
     capabilities:
