@@ -12,3 +12,7 @@ deschedulerPolicy:
           args:
             podRestartThreshold: 100
             includingInitContainers: true
+resources:
+  requests:
+    cpu: 50m
+    memory: 200Mi
