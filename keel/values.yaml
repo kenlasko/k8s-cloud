@@ -13,11 +13,8 @@ secret:
   name: keel-creds
   create: false
 
-# webhook:
-#   enabled: true
-
 mail:
-  enabled: true
+  enabled: false
   from: "Keel Cloud Updates <keelupdates@ucdialplans.com>"
   to: "ken.lasko@gmail.com"
   smtp:
