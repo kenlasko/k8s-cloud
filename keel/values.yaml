@@ -3,7 +3,7 @@ image:
   tag: latest
 
 polling:
-  enabled: true
+  enabled: false
   defaultSchedule: "0 */4 * * *" # Every 4 hours
 
 helmProvider:
