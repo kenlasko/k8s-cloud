@@ -9,7 +9,7 @@ metadata:
     keel.sh/trigger: poll
     keel.sh/match-tag: "true"
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: vaultwarden
