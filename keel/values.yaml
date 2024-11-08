@@ -4,7 +4,7 @@ image:
 
 polling:
   enabled: false
-  defaultSchedule: "0 */4 * * *" # Every 4 hours
+  defaultSchedule: "@every 4h"
 
 helmProvider:
   enabled: false
