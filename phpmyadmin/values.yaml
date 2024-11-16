@@ -1,3 +1,4 @@
+replicas: 0
 db:
   host: ""
   allowArbitraryServer: false
