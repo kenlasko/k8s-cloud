@@ -8,3 +8,5 @@ service:
   annotations:
     tailscale.com/expose: "true"
     tailscale.com/hostname: "cloud-phpmyadmin"
+pdb:
+  create: false
