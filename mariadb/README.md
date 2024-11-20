@@ -16,7 +16,6 @@ show variables like 'gtid_binlog_pos';
 ```
 unlock tables;
 ```
-5. Connect to NAS01 and rename `/share/backup/mariadb/mariadb-backup-<dayofweek>.sql` to `mariadb-backup.sql`
 
 ## MariaDB Cloud Setup
 1. If replication was previously enabled on cloud, run:
@@ -29,7 +28,7 @@ drop database vaultwarden;
 drop database phpmyadmin;
 ```
 2. Enable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
-3. Run `mariadb-restore` from `mariadb` namespace.
+3. Run `mariadb-restore` from `mariadb` namespace. This will restore the newest backup file.
 
 4. Connect to MariaDB pod and run (or do it from PHPMyAdmin):
 ```
