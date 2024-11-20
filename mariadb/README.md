@@ -18,19 +18,9 @@ unlock tables;
 ```
 
 ## MariaDB Cloud Setup
-1. If replication was previously enabled on cloud, run:
-```
-stop slave;
-drop database gitea;
-drop database homeassist;
-drop database ucdialplans;
-drop database vaultwarden;
-drop database phpmyadmin;
-```
-2. Enable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
-3. Run `mariadb-restore` from `mariadb` namespace. This will restore the newest backup file.
-
-4. Connect to MariaDB pod and run (or do it from PHPMyAdmin):
+1. Enable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
+2. Run `mariadb-restore` from `mariadb` namespace. This will restore the newest backup file.
+3. Connect to MariaDB pod and run (or do it from PHPMyAdmin):
 ```
 mariadb -u root -p$MARIADB_ROOT_PASSWORD
 ```
@@ -46,27 +36,8 @@ change master to
 
 start slave;
 ```
+4. Disable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
 
-5. Disable ```Oracle to NAS``` port forwarding rule on https://unifi.ucdialplans.com/network/default/settings/security/port-forwarding
-6. Add Uptime-Kuma procedure so it can check replication status
-```
-DELIMITER $$
-CREATE PROCEDURE phpmyadmin.check_replication()
-BEGIN
-    DECLARE rep_status VARCHAR(50);
-    SELECT VARIABLE_VALUE INTO rep_status
-    FROM INFORMATION_SCHEMA.GLOBAL_STATUS
-    WHERE VARIABLE_NAME = 'Slave_running';
-
-    IF rep_status != 'ON' THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Replication is not ON.';
-    ELSE
-	SELECT rep_status;
-    END IF;
-END$$
-```
-7. Create SQL users/permissions from mariadb-users.sql (all but last 4 rows)
 
 ## Post-Replication Uptime Kuma Config
 Uptime Kuma relies on checking the results of a procedure to validate replication. Execute the following SQL statements:
