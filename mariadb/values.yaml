@@ -9,7 +9,7 @@ auth:
 commonLabels:
   tailscale.com/proxy-class: 'enable-tun'
 networkPolicy:
-  enabled: true
+  enabled: false
   extraIngress:
   - from:
     - ipBlock:
