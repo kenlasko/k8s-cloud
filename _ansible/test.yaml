@@ -1,0 +1,29 @@
+---
+- name: Check current kubectl context and confirm to continue
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: Get the current kubectl context
+      command: kubectl config current-context
+      register: current_context
+      changed_when: false
+
+    - name: Display the current context
+      debug:
+        msg: "The current kubectl context is: {{ current_context.stdout }}"
+
+    - name: Confirm to continue
+      pause:
+        prompt: "Are you sure you want to proceed with the context '{{ current_context.stdout }}'? (yes/no)"
+      register: user_input
+
+    - name: Fail if user does not confirm
+      fail:
+        msg: "User aborted the operation."
+      when: user_input.user_input | lower != 'yes'
+
+    - name: Proceed with further tasks
+      debug:
+        msg: "Proceeding with tasks since user confirmed."
+
