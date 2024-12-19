@@ -1,4 +1,0 @@
-mirrors:
-  registry.ucdialplans.com:
-    endpoint:
-      - "http://registry.ucdialplans.com"
