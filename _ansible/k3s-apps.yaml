@@ -2,6 +2,8 @@
 # Installs the base apps (Cilium, Traefik, ArgoCD) to get started with installing all other apps
 - hosts: workstation
   tasks:
+  - name: Change kubectl context to cloud
+    command: kubectl config use-context cloud
   - name: Install default sealed secrets certificate
     kubernetes.core.k8s:
       state: present
