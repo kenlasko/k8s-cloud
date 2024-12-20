@@ -50,6 +50,6 @@ spec:
     name: cilium-ca
   syncPolicy:
     automated:
-      selfHeal: true
+      null #temporarily disabled for vacation
     syncOptions:
     - CreateNamespace=true

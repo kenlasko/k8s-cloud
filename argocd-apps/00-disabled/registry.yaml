@@ -14,6 +14,6 @@ spec:
     namespace: registry
   syncPolicy:
     automated:
-      selfHeal: true
+      null #temporarily disabled for vacation
     syncOptions:
     - CreateNamespace=true
