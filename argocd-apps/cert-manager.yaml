@@ -6,21 +6,21 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 'https://charts.jetstack.io'
+  - repoURL: "https://charts.jetstack.io"
     targetRevision: "*"
     chart: cert-manager
     helm:
       valueFiles:
       - $values/cert-manager/values.yaml
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     ref: values
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     path: cert-manager
     targetRevision: HEAD
     directory:
-      exclude: '*_DISABLED.yaml'
+      exclude: "*_DISABLED.yaml"
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: "https://kubernetes.default.svc"
     namespace: cert-manager
   syncPolicy:
     automated:

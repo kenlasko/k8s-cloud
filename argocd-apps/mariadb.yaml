@@ -6,21 +6,21 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 19.1.0
+  - repoURL: "registry-1.docker.io/bitnamicharts"
+    targetRevision: 20.2.1
     chart: mariadb
     helm:
       valueFiles:
       - $values/mariadb/values.yaml
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     ref: values
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     path: mariadb
     targetRevision: HEAD
     directory:
-      exclude: '*_DISABLED.yaml'
+      exclude: "*_DISABLED.yaml"
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: "https://kubernetes.default.svc"
     namespace: mariadb
   ignoreDifferences:
   - jsonPointers:

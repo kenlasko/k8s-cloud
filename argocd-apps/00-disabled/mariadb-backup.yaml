@@ -6,11 +6,11 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     path: mariadb-backup
     targetRevision: HEAD
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: "https://kubernetes.default.svc"
     namespace: mariadb
   syncPolicy:
     automated:

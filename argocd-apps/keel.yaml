@@ -6,21 +6,21 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 'https://charts.keel.sh'
+  - repoURL: "https://charts.keel.sh"
     targetRevision: "*"
     chart: keel
     helm:
       valueFiles:
       - $values/keel/values.yaml
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     ref: values
-  - repoURL: 'git@github.com:kenlasko/k3s-cloud.git'
+  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
     path: keel
     targetRevision: HEAD
     directory:
-      exclude: '*_DISABLED.yaml'
+      exclude: "*_DISABLED.yaml"
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: "https://kubernetes.default.svc"
     namespace: kube-system
   syncPolicy:
     automated:
