@@ -1,5 +1,4 @@
-kind: Deployment
-schedule: "49 */2 * * *"  # Every hour at 50 min past
+schedule: "50 */2 * * *"  # Every hour at 50 min past
 deschedulerPolicy:
   profiles:
   - name: default
