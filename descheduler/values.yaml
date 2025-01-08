@@ -1,17 +1,18 @@
+kind: Deployment
 schedule: "49 */2 * * *"  # Every hour at 50 min past
 deschedulerPolicy:
   profiles:
-    - name: default
-      pluginConfig:
-        - name: DefaultEvictor
-          args:
-            ignorePvcPods: true
-            evictLocalStoragePods: true
-        - name: RemoveDuplicates
-        - name: RemovePodsHavingTooManyRestarts
-          args:
-            podRestartThreshold: 100
-            includingInitContainers: true
+  - name: default
+    pluginConfig:
+    - name: DefaultEvictor
+      args:
+        ignorePvcPods: true
+        evictLocalStoragePods: true
+    - name: RemoveDuplicates
+    - name: RemovePodsHavingTooManyRestarts
+      args:
+        podRestartThreshold: 100
+        includingInitContainers: true
 resources:
   requests:
     cpu: 50m
