@@ -29,7 +29,7 @@
       create_namespace: true
       update_repo_cache: true
       values_files:
-      - /home/ken/k3s-cloud/cilium/values.yaml
+      - /home/ken/k8s-cloud/cilium/values.yaml
   - name: Add Sealed-Secrets chart repo
     kubernetes.core.helm_repository:
       name: bitnami-labs
@@ -42,7 +42,7 @@
       release_namespace: kube-system
       verify_ssl: no
       values_files:
-      - /home/ken/k3s-cloud/sealed-secrets/values.yaml
+      - /home/ken/k8s-cloud/sealed-secrets/values.yaml
   - name: Add Cert-Manager chart repo
     kubernetes.core.helm_repository:
       name: cert-manager
@@ -55,13 +55,13 @@
       create_namespace: true
       release_namespace: cert-manager
       values_files:
-      - /home/ken/k3s-cloud/cert-manager/values.yaml
+      - /home/ken/k8s-cloud/cert-manager/values.yaml
   - name: Apply Cert-Manager resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/cert-manager/cloudflare-cert.yaml"
-    - "/home/ken/k3s-cloud/cert-manager/sealed-secrets.yaml"
+    - "/home/ken/k8s-cloud/cert-manager/cloudflare-cert.yaml"
+    - "/home/ken/k8s-cloud/cert-manager/sealed-secrets.yaml"
   - name: Add ArgoCD chart repo
     kubernetes.core.helm_repository:
       name: argocd
@@ -73,23 +73,23 @@
       create_namespace: true
       release_namespace: argocd
       values_files:
-      - /home/ken/k3s-cloud/argocd/values.yaml
+      - /home/ken/k8s-cloud/argocd/values.yaml
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ken/k3s-cloud/argocd/sealed-secrets.yaml
+      src: /home/ken/k8s-cloud/argocd/sealed-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/argocd/[a-h]*.yaml"
+    - "/home/ken/k8s-cloud/argocd/[a-h]*.yaml"
     ignore_errors: true
   - name: Apply Cilium gateways
     kubernetes.core.k8s:
       state: present
-      src: /home/ken/k3s-cloud/cilium/gateway.yaml
+      src: /home/ken/k8s-cloud/cilium/gateway.yaml
   - name: Apply Cilium resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k3s-cloud/cilium/[h-l]*.yaml"
+    - "/home/ken/k8s-cloud/cilium/[h-l]*.yaml"

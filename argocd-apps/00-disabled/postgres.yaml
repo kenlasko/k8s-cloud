@@ -12,9 +12,9 @@ spec:
     helm:
       valueFiles:
       - $values/postgres/values.yaml
-  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
-  - repoURL: "git@github.com:kenlasko/k3s-cloud.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     path: postgres
     targetRevision: HEAD
   destination:
