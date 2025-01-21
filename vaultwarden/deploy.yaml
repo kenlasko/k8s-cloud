@@ -27,7 +27,7 @@ spec:
         fsGroup: 2000
       containers:
       - name: vaultwarden
-        image: vaultwarden/server:latest
+        image: docker.io/vaultwarden/server:1.32.7
         imagePullPolicy: Always
         resources:
           requests:
