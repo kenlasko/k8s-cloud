@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":rebaseStalePrs"
+  ],
+  "argocd": {
+    "fileMatch": [
+      "argocd-apps/.+\\.yaml$",
+      "argocd/.+\\.yaml$"]
+  },
+  "kubernetes": {
+    "fileMatch": ["deploy","cronjob","tunnel"]
+  },
+  "hostRules": [
+    {
+      "hostType": "docker",
+      "matchHost": "docker.io",
+      "username": "kenlasko",
+      "password": "{{ secrets.DOCKER_CREDS }}"
+    }
+  ],
+  "packageRules": [
+    {
+      "managers": ["argocd","kubernetes"],
+      "matchPackageNames": [
+        "**/!(cilium|galera|longhorn|stack)"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true
+    }
+  ]
+}
