@@ -27,7 +27,7 @@ spec:
       containers:
       - name: adguard
         image: docker.io/adguard/adguardhome:v0.107.55
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false

@@ -18,7 +18,7 @@ spec:
             server-type: rpi
           containers:
           - name: mariadb-ucdialplans-statusupdate
-            image: mariadb:10.11.10
+            image: docker.io/mariadb:11.6.2
             imagePullPolicy: IfNotPresent
             env: 
             - name: K3S_ROOT_PW 
