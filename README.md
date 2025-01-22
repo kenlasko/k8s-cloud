@@ -1,3 +1,14 @@
+# Introduction
+This is the Git repository that contains all the configuration for my cloud-based single-node Kubernetes cluster. The cluster is hosted on a single node in [Oracle Cloud](https://cloud.oracle.com). 
+
+This cluster is used as a disaster-recovery solution for my [home-based Kubernetes cluster](https://github.com/kenlasko/k8s). It replicates the function of some critical services:
+* MariaDB
+* AdGuard Home
+* VaultWarden
+* UCDialplans website
+
+Most of the services are in warm-standby mode. AdGuard Home is the only actively used service for when I am away from home as it responds to requests from *.dns.ucdialplans.com. However, it is very lightly used, since my phone is usually connected to home via Wireguard. 
+
 # Node Prep
 1. Download ARM64 Talos Oracle image from https://omni.ucdialplans.com and place in /home/ken/
 2. Create image metadata file and save as ```image_metadata.json```
@@ -44,6 +55,7 @@ tar zcf talos-oracle-arm64.oci oracle-arm64.qcow2 image_metadata.json
 
 # Kubernetes Install
 Ensure that Omnictl/Talosctl is ready to go. Installation steps are [here](https://github.com/kenlasko/omni/).
+
 ## Install Kubernetes
 1. Make sure all Talos nodes are in maintenance mode and are available in Omni, then create cluster:
 ```
@@ -55,12 +67,10 @@ ansible-playbook ~/k3s-cloud/_ansible/k3s-apps.yaml
 ```
 3. Get initial ArgoCD password
 ```
-kubectl -n argocd get secret argocd-initial-admin-secret \
-          -o jsonpath="{.data.password}" | base64 -d; echo
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
 ## Get Kubernetes token
 ```
-kubectl -n kube-system get secret kubeapi-service-account-secret \
-          -o jsonpath="{.data.token}" | base64 -d; echo
+kubectl -n kube-system get secret kubeapi-service-account-secret -o jsonpath="{.data.token}" | base64 -d; echo
 ```
