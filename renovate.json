@@ -36,7 +36,7 @@
         "kubernetes"
       ],
       "matchPackageNames": [
-        "**/!(cilium|*stack)"
+        "**/!(cilium|descheduler|*stack)"
       ],
       "automerge": true,
       "automergeType": "branch",
