@@ -4,14 +4,22 @@
     "config:recommended",
     ":rebaseStalePrs"
   ],
-  "enabledManagers": ["argocd", "kubernetes"],
+  "enabledManagers": [
+    "argocd",
+    "kubernetes"
+  ],
   "argocd": {
     "fileMatch": [
       "argocd-apps/.+\\.yaml$",
-      "argocd/.+\\.yaml$"]
+      "argocd/.+\\.yaml$"
+    ]
   },
   "kubernetes": {
-    "fileMatch": ["deploy","cronjob","tunnel"]
+    "fileMatch": [
+      "deploy",
+      "cronjob",
+      "tunnel"
+    ]
   },
   "hostRules": [
     {
@@ -23,7 +31,10 @@
   ],
   "packageRules": [
     {
-      "managers": ["argocd","kubernetes"],
+      "matchManagers": [
+        "argocd",
+        "kubernetes"
+      ],
       "matchPackageNames": [
         "**/!(cilium|*stack)"
       ],
