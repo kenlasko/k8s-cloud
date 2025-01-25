@@ -12,8 +12,8 @@ data:
     <configuration>
       <system.web>
         <httpCookies httpOnlyCookies="true" requireSSL="true" />
-        <httpRuntime targetFramework="4.6" enableVersionHeader="false" />
-        <compilation targetFramework="4.6" />
+        <httpRuntime targetFramework="4.8" enableVersionHeader="false" />
+        <compilation targetFramework="4.8" />
         <pages>
           <namespaces>
             <add namespace="System" />
@@ -27,7 +27,7 @@ data:
             <add namespace="MySqlConnector" />
           </namespaces>
         </pages>
-        <sessionState timeout="60" />
+        <sessionState timeout="30" />
         <customErrors mode="On" defaultRedirect="https://www.ucdialplans.com/errorpage.html" />
       </system.web>
       <system.webServer>
@@ -48,7 +48,7 @@ data:
         </httpProtocol>
         <staticContent>
           <mimeMap fileExtension=".ps1" mimeType="file/download" />
-          <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="01:00:00" />
+          <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="7.00:00:00" />
         </staticContent>
         <urlCompression doDynamicCompression="true" />
         <httpRedirect enabled="false" destination="https://www.ucdialplans.com" exactDestination="true" />
@@ -59,7 +59,7 @@ data:
         </DbProviderFactories>
       </system.data>
       <connectionStrings>
-        <add connectionString="server=mariadb.mariadb.svc.cluster.local;database=ucdialplans;uid=UCDialplans_Website;pwd=***REMOVED***; Convert Zero Datetime=True" name="UCDialplansDB" providerName="MySqlConnector" />
+        <add connectionString="server=[DB_SERVER];database=[DB_DATABASE];uid=[DB_USERNAME];pwd=[DB_PASSWORD]; Convert Zero Datetime=True" name="UCDialplansDB" providerName="MySqlConnector" />
       </connectionStrings>
       <appSettings>
         <add key="webPages:Version" value="3.0" />
