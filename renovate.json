@@ -35,6 +35,10 @@
         "argocd",
         "kubernetes"
       ],
+      "matchUpdateTypes": [
+        "minor", 
+        "patch"
+      ],
       "matchPackageNames": [
         "**/!(cilium|descheduler|*stack)"
       ],
