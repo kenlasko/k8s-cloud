@@ -40,8 +40,7 @@
       ],
       "automerge": true,
       "automergeType": "branch",
-      "ignoreTests": true,
-      "minimumReleaseAge": "1 day"
+      "ignoreTests": true
     }
   ]
 }
