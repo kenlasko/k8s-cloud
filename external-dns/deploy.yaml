@@ -42,7 +42,7 @@ spec:
             cpu: 2m
             memory: 40Mi
           limits:
-            cpu: 100m
+            # cpu: 100m
             memory: 80Mi
         env:
         - name: TZ
@@ -78,7 +78,7 @@ spec:
             cpu: 20m
             memory: 10Mi
           limits:
-            cpu: 150m
+            # cpu: 150m
             memory: 20Mi
         ports:
           - containerPort: 8888

@@ -75,7 +75,7 @@ resources:
     cpu: 100m
     memory: 250Mi
   limits:
-    cpu: 400m
+    # cpu: 400m
     memory: 400Mi
 
 hubble:
@@ -88,7 +88,7 @@ hubble:
         cpu: 15m
         memory: 25Mi
       limits:
-        cpu: 50m
+        # cpu: 50m
         memory: 50Mi   
   ui:
     enabled: true
