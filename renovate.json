@@ -40,7 +40,7 @@
         "patch"
       ],
       "matchPackageNames": [
-        "**/!(cilium|descheduler|*stack)"
+        "**/!(cilium|descheduler)"
       ],
       "automerge": true,
       "automergeType": "branch",
