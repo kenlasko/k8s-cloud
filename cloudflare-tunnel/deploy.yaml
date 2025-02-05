@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cloudflare-tunnel
-        image: docker.io/cloudflare/cloudflared:2025.1.1
+        image: docker.io/cloudflare/cloudflared:2025.2.0
         imagePullPolicy: IfNotPresent
         env:
         - name: TOKEN
