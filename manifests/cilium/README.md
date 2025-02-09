@@ -9,4 +9,4 @@
 # Installation
 Cilium has to be the first thing installed after the cluster is first created, because I am using Cilium's kube-proxy instead of the built-in one. Without this, the cluster is non-functional until Cilium is up and running.
 
-Cilium is initially installed via [Ansible script](/_ansible), and maintained/updated via [Argo CD](/argocd).
+Cilium is initially installed via [Ansible script](/ansible), and maintained/updated via [Argo CD](/manifests/argocd).

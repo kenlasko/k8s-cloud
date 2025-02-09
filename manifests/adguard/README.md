@@ -2,7 +2,7 @@
 [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) provides DNS ad-blocking for my internal network along with my devices when outside the home.
 
 # Configuration
-The [AdGuard Home instance](/adguard) on Kubernetes is the primary instance of a 3-instance "cluster" of sorts. The other two are running in Docker on standalone Raspberry Pis and are synced with the primary via [AdGuard-Sync](https://github.com/bakito/adguardhome-sync).
+The [AdGuard Home instance](/manifests/adguard) on Kubernetes is the primary instance of a 3-instance "cluster" of sorts. The other two are running in Docker on standalone Raspberry Pis and are synced with the primary via [AdGuard-Sync](https://github.com/bakito/adguardhome-sync).
 
 DNS is serviced from the primary via DNS port 53 and HTTPS port 853 on `192.168.1.16`. The RPis are serving DNS port 53 on `192.168.1.17` and `192.168.1.18`. 
 
