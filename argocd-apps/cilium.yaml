@@ -15,7 +15,7 @@ spec:
     chart: cilium
     helm:
       valueFiles:
-      - $values/cilium/values.yaml
+      - $values/manifests/cilium/values.yaml
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
