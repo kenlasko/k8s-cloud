@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: registry
+    path: manifests/registry
     targetRevision: HEAD
   destination:
     server: "https://kubernetes.default.svc"

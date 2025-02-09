@@ -19,7 +19,7 @@ spec:
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: cilium
+    path: manifests/cilium
     targetRevision: HEAD
     directory:
       exclude: "*_DISABLED.yaml"
