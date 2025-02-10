@@ -4,10 +4,6 @@ kind: StatefulSet
 metadata:
   name: vaultwarden
   namespace: vaultwarden
-  annotations:
-    keel.sh/policy: force
-    keel.sh/trigger: poll
-    keel.sh/match-tag: "true"
 spec:
   replicas: 0
   selector:

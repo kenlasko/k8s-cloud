@@ -91,10 +91,6 @@ configs:
       url: https://intel.github.io/helm-charts/
       name: intel
       type: helm
-    keel:
-      url: https://charts.keel.sh
-      name: keel
-      type: helm
     longhorn:
       url: https://charts.longhorn.io
       name: longhorn

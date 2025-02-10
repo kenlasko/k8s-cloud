@@ -3,10 +3,6 @@ This folder contains the Argo CD application definitions for all the Kubernetes 
 
 The [00-disabled](/argocd-apps/00-disabled) folder is used to put applications that I don"t want to use anymore, but might want to in the future.
 
-Most of the Helm chart managed applications are set to auto-update to newer versions by way of setting `spec.sources.targetRevision: "*"`. A few (like Argo CD), are set to only upgrade minor revisions. Manually managed apps (without Helm charts) are updated via [Keel](/keel). The exceptions include:
-* [Cilium](/manifests/cilium)
-* [MariaDB](/manifests/mariadb)
-
 ## Sync Wave -5
 Apps that basically everything else depends on:
 * [Cert Manager](/manifests/cert-manager)
