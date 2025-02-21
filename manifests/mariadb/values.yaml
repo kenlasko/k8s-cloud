@@ -10,12 +10,12 @@ commonLabels:
   tailscale.com/proxy-class: 'enable-tun'
 networkPolicy:
   enabled: false
-  extraIngress:
-  - from:
-    - ipBlock:
-        cidr: 0.0.0.0/0
-    ports:
-      - port: 3306    
+  # extraIngress:
+  # - from:
+  #   - ipBlock:
+  #       cidr: 0.0.0.0/0
+  #   ports:
+  #     - port: 3306    
 primary:
   persistence:
     storageClass: 'local-path'
