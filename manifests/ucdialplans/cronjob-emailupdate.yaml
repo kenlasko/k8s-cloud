@@ -12,8 +12,6 @@ spec:
     spec:
       template:
         spec:
-          nodeSelector:
-            server-speed: nuc-slow
           restartPolicy: OnFailure
           containers:
           - name: emailupdate
@@ -23,7 +21,7 @@ spec:
             - /bin/sh
             - -c
             - echo "$(date +%F_%T) Checking rulesets for updates..." &&
-              curl -o /dev/null --silent --location --insecure --request POST 'https://www.ucdialplans.com/EmailUpdates.aspx' --form 'userID2="***REMOVED***"' &&
+              curl -o /dev/null --silent --location --insecure --request POST 'https://www.ucdialplans.com/EmailUpdates.aspx' --form 'userID2="$MS_ACCOUNTID"' &&
               echo "$(date +%F_%T) Finished!"
             resources:
               requests:
@@ -32,3 +30,20 @@ spec:
               limits:
                 # cpu: 300m
                 memory: 300Mi
+            env:
+            - name: MS_ACCOUNTID
+              valueFrom:
+                secretKeyRef:
+                  name: ms-account-id
+                  key: ms-account-id
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: node-role.kubernetes.io/control-plane
+                      operator: DoesNotExist
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values: 
+                      - "amd64"
