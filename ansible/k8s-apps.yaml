@@ -29,7 +29,7 @@
       create_namespace: true
       update_repo_cache: true
       values_files:
-      - /home/ken/k8s-cloud/manifests/cilium/values.yaml
+      - /home/ken/k8s-cloud/manifests/network/cilium/values.yaml
   - name: Add Sealed-Secrets chart repo
     kubernetes.core.helm_repository:
       name: bitnami-labs
@@ -42,7 +42,7 @@
       release_namespace: kube-system
       verify_ssl: no
       values_files:
-      - /home/ken/k8s-cloud/manifests/sealed-secrets/values.yaml
+      - /home/ken/k8s-cloud/manifests/system/sealed-secrets/values.yaml
   - name: Add Cert-Manager chart repo
     kubernetes.core.helm_repository:
       name: cert-manager
@@ -55,13 +55,13 @@
       create_namespace: true
       release_namespace: cert-manager
       values_files:
-      - /home/ken/k8s-cloud/manifests/cert-manager/values.yaml
+      - /home/ken/k8s-cloud/manifests/system/cert-manager/values.yaml
   - name: Apply Cert-Manager resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k8s-cloud/manifests/cert-manager/cloudflare-cert.yaml"
-    - "/home/ken/k8s-cloud/manifests/cert-manager/sealed-secrets.yaml"
+    - "/home/ken/k8s-cloud/manifests/system/cert-manager/cloudflare-cert.yaml"
+    - "/home/ken/k8s-cloud/manifests/system/cert-manager/sealed-secrets.yaml"
   - name: Add ArgoCD chart repo
     kubernetes.core.helm_repository:
       name: argocd
@@ -87,9 +87,9 @@
   - name: Apply Cilium gateways
     kubernetes.core.k8s:
       state: present
-      src: /home/ken/k8s-cloud/manifests/cilium/gateway.yaml
+      src: /home/ken/k8s-cloud/manifests/network/cilium/gateway.yaml
   - name: Apply Cilium resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k8s-cloud/manifests/cilium/[h-l]*.yaml"
+    - "/home/ken/k8s-cloud/manifests/network/cilium/[h-l]*.yaml"
