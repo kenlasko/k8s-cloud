@@ -9,19 +9,19 @@ spec:
   - repoURL: 'git@github.com:kenlasko/k8s-cloud.git'
     path: argocd-apps
     targetRevision: HEAD
-  - repoURL: "git@github.com:kenlasko/k8s.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     path: argocd-apps/apps
     targetRevision: HEAD
-  - repoURL: "git@github.com:kenlasko/k8s.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     path: argocd-apps/database
     targetRevision: HEAD
-  - repoURL: "git@github.com:kenlasko/k8s.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     path: argocd-apps/monitoring
     targetRevision: HEAD
-  - repoURL: "git@github.com:kenlasko/k8s.git"
+  - repoURL: "git@github.com:kenlasko/k8-clouds.git"
     path: argocd-apps/network
     targetRevision: HEAD
-  - repoURL: "git@github.com:kenlasko/k8s.git"
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     path: argocd-apps/system
     targetRevision: HEAD
   destination:
