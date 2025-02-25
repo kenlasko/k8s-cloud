@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: manifests/cloudflare-tunnel
+    path: manifests/network/cloudflare-tunnel
     targetRevision: HEAD
     directory:
       exclude: "*_DISABLED.yaml"

@@ -11,11 +11,11 @@ spec:
     chart: mariadb
     helm:
       valueFiles:
-      - $values/manifests/mariadb/values.yaml
+      - $values/manifests/database/mariadb/values.yaml
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: manifests/mariadb
+    path: manifests/database/mariadb
     targetRevision: HEAD
     directory:
       exclude: "*_DISABLED.yaml"
