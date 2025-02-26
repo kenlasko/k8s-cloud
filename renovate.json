@@ -10,8 +10,8 @@
   ],
   "argocd": {
     "fileMatch": [
-      "argocd-apps/.+\\.yaml$",
-      "manifests/argocd/.+\\.yaml$"
+      "argocd-apps/[^/]+/[^/]+\\.yaml$",
+      "manifests/argocd/argocd.yaml$"
     ]
   },
   "kubernetes": {
