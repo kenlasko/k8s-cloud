@@ -66,6 +66,6 @@ extraPorts:
 - port: 853
   name: dns-tls-853
   protocol: TCP
-tailscale:
-  name: cloud-adguard-egress
+# tailscale:
+#   name: cloud-adguard-egress
 httpRouteNameOverride: cloud-adguard.ucdialplans.com

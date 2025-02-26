@@ -42,7 +42,7 @@ metadata:
   annotations:
     tailscale.com/tailnet-fqdn: "cloud-mariadb.tailb7050.ts.net"
   labels:
-    tailscale.com/proxy-class: "run-on-worker"  
+    tailscale.com/proxy-class: "enable-tun"  
   name: {{ .Values.tailscale.name }}
   namespace: {{ .Release.Namespace }}
 spec:
