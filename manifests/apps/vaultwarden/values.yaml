@@ -40,3 +40,4 @@ envFrom:
 persistentVolume:
   type: local-path
   size: 250Mi
+  mountPath: /data
