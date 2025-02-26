@@ -1,0 +1,99 @@
+# General settings
+appKind: StatefulSet  # Select either "Deployment" or "StatefulSet"
+nameOverride: ""
+replicas: 1
+revisionHistoryLimit: 2
+dnsPolicy: ClusterFirstWithHostNet
+hostNetwork: false
+restartPolicy: Always
+autoMountServiceAccountToken: false
+serviceAccountName: ""
+priorityClassName: low-priority
+
+# Image settings
+image:
+  registry: "your-registry"
+  repository: "your-repository"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+# Security context
+securityContext: {}
+
+# Environment variables
+env: []
+envFrom: []
+
+# Resource requests and limits
+resources: {}
+
+# Service settings
+service: {}
+  # port: 80
+  # type: ClusterIP
+  # externalTrafficPolicy: ""
+
+  # # Additional labels to add to the service
+  # extraLabels: {}
+
+  # # Annotations to add to the service
+  # annotations: {}
+
+
+# Extra ports to assign to the service
+extraPorts: []
+
+# Create a Tailscale external name service for connecting to the cloud k8s cluster
+tailscale: {}
+  # name: ""
+
+# HTTPRoute settings
+disableHTTPRoute: false
+httpRouteNameOverride: ""
+httpRouteFilters: []
+
+# Optional command and args for the container
+command: []
+args: []
+
+# A default livenessProbe will be created if not specified
+livenessProbe: {}
+#   httpGet:
+#     path: /
+#     port: http
+#   initialDelaySeconds: 15
+#   periodSeconds: 60
+#   timeoutSeconds: 5
+
+startupProbe: {}
+readinessProbe: {}
+
+persistentVolume: {}
+# persistentVolume:
+#   type: ""  # Select either "nfs" or "longhorn"
+#   size: "1Gi"
+#   mountPath: "/config"
+#   name: ""  # Override the default name of the volume
+
+
+# Mount an existing PVC for access to NAS media files
+media:
+  enabled: false
+  claimName: "nfs-media"
+
+# Extra volume mounts and volumes
+extraVolumeMounts: []
+extraVolumes: []
+
+# If not defined, then will apply the default affinity rules
+affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: node-role.kubernetes.io/control-plane
+  #         operator: DoesNotExist
+  #       - key: kubernetes.io/arch
+  #         operator: In
+  #         values:
+  #         - "amd64"

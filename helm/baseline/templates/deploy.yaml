@@ -1,0 +1,161 @@
+---
+apiVersion: apps/v1
+kind: {{ .Values.appKind | default "StatefulSet" }}
+metadata:
+  name: {{ .Values.nameOverride | default .Release.Name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.nameOverride | default .Release.Name }}
+    app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+spec:
+  {{- if eq (.Values.appKind | default "StatefulSet") "StatefulSet" }}
+  serviceName: {{ .Values.nameOverride | default .Release.Name }}
+  updateStrategy:
+    type: RollingUpdate
+  {{- end }}
+  replicas: {{ .Values.replicas | default 1 }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit | default 2 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.nameOverride | default .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nameOverride | default .Release.Name }}
+        app.kubernetes.io/name: {{ .Values.nameOverride | default .Release.Name }}
+        app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+    spec:
+      dnsPolicy: {{ .Values.dnsPolicy | default "ClusterFirstWithHostNet" }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork | default false}}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy | default "Always" }}
+      automountServiceAccountToken: {{ .Values.autoMountServiceAccountToken | default false }}
+      {{- if .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- end }}
+      priorityClassName: {{ .Values.priorityClassName | default "low-priority" }}
+      affinity:
+        {{- if .Values.affinity }}
+        {{- toYaml .Values.affinity | nindent 8 }}
+        {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - "amd64"
+        {{- end }}
+      containers:
+      - name: {{ .Values.nameOverride | default .Release.Name }}
+        image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+        {{- if .Values.securityContext }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        {{- end }}
+        env:
+        {{- if .Values.env }}
+          {{- toYaml .Values.env | nindent 8 }}
+        {{- else }}
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "100"
+          - name: TZ
+            value: "America/Toronto"
+        {{- end }}
+        {{- if .Values.envFrom }}
+        envFrom:
+          {{- toYaml .Values.envFrom | nindent 10 }}
+        {{- end }}
+        resources:
+        {{- toYaml .Values.resources | nindent 10 }}
+        {{- if .Values.service }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          name: http
+          protocol: TCP
+        {{- range .Values.extraPorts }}
+        - containerPort: {{ .port }}
+          name: {{ .name }}
+          protocol: {{ .protocol | default "TCP" }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.command }}
+        command:
+          {{- toYaml .Values.command | nindent 10 }}
+        {{- end }}        
+        {{- if .Values.args }}
+        args:
+          {{- toYaml .Values.args | nindent 10 }}
+        {{- end }}
+        livenessProbe:
+        {{- if .Values.livenessProbe }}
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        {{- else }}
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 5
+        {{- end }}
+        {{- if .Values.startupProbe }}
+        startupProbe:
+          {{- toYaml .Values.startupProbe | nindent 10 }}
+        {{- end }}
+        {{- if .Values.readinessProbe }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 10 }}
+        {{- end }}
+
+      {{- if or .Values.persistentVolume .Values.extraVolumes .Values.media.enabled  }}  
+        volumeMounts:
+        {{- if .Values.persistentVolume }}
+        - name: {{ coalesce .Values.persistentVolume.name .Values.nameOverride .Release.Name }}-config
+          mountPath: {{ .Values.persistentVolume.mountPath | default "/config" }}
+        {{- end }}
+      {{- if .Values.media }}    
+        {{- if .Values.media.enabled | default false}}
+        - name: media
+          mountPath: /media
+        {{- end }}
+      {{- end }}
+        {{- range .Values.extraVolumeMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .mountPath }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      {{- if or .Values.persistentVolume .Values.extraVolumes .Values.media.enabled }}
+      volumes:
+      {{- if .Values.persistentVolume }}
+      - name: {{ coalesce .Values.persistentVolume.name .Values.nameOverride .Release.Name }}-config
+        persistentVolumeClaim:
+        {{- if eq .Values.persistentVolume.type "longhorn" }}
+          claimName: longhorn-{{ coalesce .Values.persistentVolume.name .Values.nameOverride .Release.Name }}-config-pvc
+        {{- else if eq .Values.persistentVolume.type "nfs" }}
+          claimName: nfs-{{ coalesce .Values.persistentVolume.name .Values.nameOverride .Release.Name }}
+        {{- end }}
+      {{- end }}
+    {{- if .Values.media }} 
+      {{- if .Values.media.enabled | default false }}
+      - name: media
+        persistentVolumeClaim:
+          claimName: {{ .Values.media.claimName | default "nfs-media" }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.extraVolumes }}
+      {{- toYaml .Values.extraVolumes | nindent 6 }}
+    {{- end }}
+    {{- end }}
