@@ -34,21 +34,10 @@ spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       {{- end }}
       priorityClassName: {{ .Values.priorityClassName | default "low-priority" }}
+      {{- if .Values.affinity }}
       affinity:
-        {{- if .Values.affinity }}
-        {{- toYaml .Values.affinity | nindent 8 }}
-        {{- else }}
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: DoesNotExist
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                - "amd64"
-        {{- end }}
+      {{- toYaml .Values.affinity | nindent 8 }}
+      {{- end }}
       containers:
       - name: {{ .Values.nameOverride | default .Release.Name }}
         image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
