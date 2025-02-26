@@ -63,8 +63,8 @@ service:
   extraLabels:
     tailscale.com/proxy-class: "enable-tun"
 extraPorts:
-- port: 443
-  name: adguard-tls
+- port: 853
+  name: dns-tls-853
   protocol: TCP
 tailscale:
   name: cloud-adguard-egress
