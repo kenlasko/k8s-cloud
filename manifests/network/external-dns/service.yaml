@@ -10,21 +10,21 @@ spec:
   externalName: cloud-egress-adguard
   type: ExternalName
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: adguard-webhook
-  annotations:
-  name: adguard-webhook
-  namespace: external-dns
-spec:
-  type: ClusterIP
-  selector:
-    app: adguard-webhook
-  ports:
-    - port: 8888
-      protocol: TCP
-      targetPort: http
-      name: web
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: adguard-webhook
+#   annotations:
+#   name: adguard-webhook
+#   namespace: external-dns
+# spec:
+#   type: ClusterIP
+#   selector:
+#     app: adguard-webhook
+#   ports:
+#     - port: 8888
+#       protocol: TCP
+#       targetPort: http
+#       name: web
