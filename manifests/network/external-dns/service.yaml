@@ -15,9 +15,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: adguard-webhook-service
+    app: adguard-webhook
   annotations:
-  name: adguard-webhook-service
+  name: adguard-webhook
   namespace: external-dns
 spec:
   type: ClusterIP
