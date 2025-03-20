@@ -30,6 +30,7 @@ spec:
           - tunnel
           - --no-autoupdate
           - --metrics
+          - --protocol http2
           - 0.0.0.0:2000
           - run
         args:
