@@ -35,6 +35,7 @@ spec:
         args:
           - --token
           - "$(TOKEN)"
+          - --protocol=http2
         livenessProbe:
           httpGet:
             path: /ready
