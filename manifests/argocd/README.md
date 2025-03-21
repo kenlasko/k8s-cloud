@@ -12,3 +12,7 @@ The [argocd-apps](/argocd-apps) folder contains the application definitions for 
 * other applications such as [VaultWarden](/manifests/apps/vaultwarden), [UCDialplans](/manifests/apps/ucdialplans) etc which rely on databases but can start without the databases present without much ill-effect (other than a possible pod restart once the database is restored)
 
 I am experimenting with [Argo CD sync-waves](https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/) to control the order of installation of these tools, so the installation can be automated.
+
+# Authentication
+ArgoCD is configured to use Github authentication instead of the built-in admin account. Github authentication uses [Github OAuth Apps](https://github.com/settings/developers), which is found under `User - Settings - Developer settings - OAuth Apps`. Steps to configure: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#dex
+

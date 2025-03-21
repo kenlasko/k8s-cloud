@@ -65,10 +65,6 @@ omnictl cluster template sync -f ~/omni/cluster-template-cloud.yaml
 ```
 ansible-playbook ~/k3s-cloud/_ansible/k3s-apps.yaml
 ```
-3. Get initial ArgoCD password
-```
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-```
 
 ## Get Kubernetes token
 ```
