@@ -9,6 +9,25 @@ This cluster is used as a disaster-recovery solution for my [home-based Kubernet
 
 Most of the services are in warm-standby mode. AdGuard Home is the only actively used service for when I am away from home as it responds to requests from *.dns.ucdialplans.com. However, it is very lightly used, since my phone is usually connected to home via Wireguard. 
 
+## Software Updates
+All software updates (excluding Kubernetes and OS) are managed via [Renovate](https://github.com/renovatebot/renovate). Renovate watches the Github repo and checks for software version updates on any Helm chart, ArgoCD application manifest or deployment manifest. If an update is found, Renovate will update the version in the repo and let ArgoCD handle the actual upgrade. All updates are logged in the repo as commits.
+
+The configuration for Renovate is stored in [renovate.json](/renovate.json). The dashboard is available at https://developer.mend.io/github/kenlasko
+
+Renovate is set to automatically and silently upgrade every software package EXCEPT for the following:
+* [Cilium](/manifests/network/cilium)
+
+When upgrades for the above packages are found, Renovate will create a pull request that has to be manually approved (or denied). Once approved, ArgoCD manages the actual upgrade as with any other software.
+
+# Cluster Installation Prerequisites
+SideroLabs Omni must be ready to go. Installation steps are in the repository link below:
+[Omni On-Prem installation and configuration](https://github.com/kenlasko/omni/)
+
+You will need a workstation (preferably Linux-based) with several tools to get things rolling:
+- [Workstation Prep Instructions for Ubuntu-based distributions](/docs/WORKSTATION.md)
+- [NixOS Workstation Build](https://github.com/kenlasko/nixos-wsl/)
+
+
 # Node Prep
 1. Download ARM64 Talos Oracle image from https://omni.ucdialplans.com and place in /home/ken/
 2. Create image metadata file and save as ```image_metadata.json```
@@ -145,4 +164,33 @@ kubectl config use-context omni-cloud
 
 # To use the token
 kubectl config use-context cloud
+```
+
+# Commit Pre-Check
+This repository makes use of [pre-commit](https://pre-commit.com) to guard against accidental secret commits. It is currently using [GitGuardian](https://dashboard.gitguardian.com) [ggshield](https://www.gitguardian.com/ggshield) for secret validation. Requires a GitGuardian account, which does offer a free tier for home use.
+
+## Requirements
+Requires installation of the following programs:
+* ggshield
+* pre-commit
+
+In my case, this is handled by [NixOS](https://github.com/kenlasko/nixos)
+
+## Configuration
+1. Create a file called `.pre-commit-config.yaml` and place in the root of your repository
+2. Populate the file according to your desired platform (ggshield shown):
+```
+repos:
+  - repo: https://github.com/GitGuardian/ggshield
+    rev: v1.37.0
+    hooks:
+      - id: ggshield
+```
+3. Run the following command:
+```
+pre-commit install
+```
+4. For ggshield, login to your GitGuardian account. Only required once.
+```
+ggshield auth login
 ```
