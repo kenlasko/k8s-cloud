@@ -57,16 +57,92 @@ tar zcf talos-oracle-arm64.oci oracle-arm64.qcow2 image_metadata.json
 Ensure that Omnictl/Talosctl is ready to go. Installation steps are [here](https://github.com/kenlasko/omni/).
 
 ## Install Kubernetes
-1. Make sure all Talos nodes are in maintenance mode and are available in Omni, then create cluster:
+This guide assumes you're using a NixOS distribution that is configured to securely store and present all required certificates. For more information, see [my NixOS repo](https://github.com/kenlasko/nixos-wsl/).
+
+1. Make sure all Talos nodes are in maintenance mode and appearing in [Omni](https://omni.ucdialplans.com). Use network boot via [NetBootXYZ](https://github.com/kenlasko/pxeboot/) to boot nodes into Talos maintenance mode.
+2. Create cluster via `omnictl`:
 ```
 omnictl cluster template sync -f ~/omni/cluster-template-cloud.yaml
 ```
-2. Install Cilium, Cert-Manager, Sealed-Secrets and ArgoCD
+3. Set the proper context with kubectl and verify you see the expected nodes
 ```
-ansible-playbook ~/k3s-cloud/_ansible/k3s-apps.yaml
+kubectl config use-context omni-cloud
+kubectl get nodes
+```
+4. [Bootstrap cluster](https://github.com/kenlasko/k8s-bootstrap) by installing Cilium, Cert-Manager, Sealed-Secrets and ArgoCD via OpenTofu/Terraform
+```
+cd ~/terraform
+tf workspace new cloud
+tf workspace select cloud
+tf init
+tf apply
 ```
 
-## Get Kubernetes token
+## Get Kubernetes token for token-based authentication
+Cluster connectivity can be done via OIDC through Omni, but its a good idea to have secondary access through standard token-based authentication. The cluster is configured for this using [Talos Shared VIP](https://www.talos.dev/v1.9/talos-guides/network/vip/), which makes cluster API access via a shared IP that is advertised by one of the control plane nodes. The address for this is `https://cloud-kube.ucdialplans.com:6443`.
+
+The service account is configured via [kubeapi-serviceaccount.yaml](/manifests/argocd/kubeapi-serviceaccount.yaml) and gets its token when the service account is created.
+
+For configuring your `kubeconfig` file with the token-based authentication information, you need the service account token as well as the certificate authority public certificate. To get these, run:
 ```
+echo
+echo "Service Account Token:"
 kubectl -n kube-system get secret kubeapi-service-account-secret -o jsonpath="{.data.token}" | base64 -d; echo
+echo
+echo "Certificate Authority:"
+kubectl -n kube-system get secret kubeapi-service-account-secret -o jsonpath="{.data.ca\.crt}"
+```
+
+Add these to your `.kube/config` file like this:
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: 
+    *********************************** ADD-CERT-AUTH-BASE64-STRING-HERE ***********************************
+    server: https://cloud-kube.ucdialplans.com:6443
+  name: cloud
+- cluster:
+    server: https://omni.ucdialplans.com:8100/
+  name: omni-cloud
+contexts:
+- context:
+    cluster: cloud
+    user: cloud-user
+  name: cloud
+- context:
+    cluster: omni-cloud
+    user: onprem-omni-cloud-ken.lasko@gmail.com
+  name: omni-cloud
+current-context: cloud
+kind: Config
+preferences: {}
+users:
+- name: cloud-user
+  user:
+    token: *********************************** ADD-SERVICE-ACCOUNT-TOKEN-HERE ***********************************
+- name: onprem-omni-cloud-ken.lasko@gmail.com
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - oidc-login
+      - get-token
+      - --oidc-issuer-url=https://omni.ucdialplans.com/oidc
+      - --oidc-client-id=native
+      - --browser-command=wslview
+      - --oidc-extra-scope=cluster:cloud
+      command: kubectl
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+```
+
+Switch context between the OIDC-based authenticated access and the token-based access with:
+```
+# To use OIDC
+kubectl config use-context omni-cloud
+
+# To use the token
+kubectl config use-context cloud
 ```
