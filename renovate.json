@@ -42,7 +42,7 @@
       "matchPackageNames": [
         "**/!(cilium|descheduler)"
       ],
-      "automerge": true,
+      "automerge": false,
       "automergeType": "branch",
       "ignoreTests": true
     }
