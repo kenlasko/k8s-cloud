@@ -87,6 +87,10 @@ configs:
       url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
       name: csi-driver-smb
       type: helm
+    external-dns:
+      url: https://kubernetes-sigs.github.io/external-dns/
+      name: external-dns
+      type: helm
     grafana:
       url: https://grafana.github.io/helm-charts
       name: grafana
@@ -94,18 +98,6 @@ configs:
     headlamp:
       url: https://kubernetes-sigs.github.io/headlamp/
       name: headlamp
-      type: helm
-    intel:
-      url: https://intel.github.io/helm-charts/
-      name: intel
-      type: helm
-    longhorn:
-      url: https://charts.longhorn.io
-      name: longhorn
-      type: helm
-    portainer:
-      url: https://portainer.github.io/k8s/
-      name: portainer
       type: helm
     promstack:
       url: https://prometheus-community.github.io/helm-charts
