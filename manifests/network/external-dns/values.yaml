@@ -6,17 +6,6 @@ txtOwnerId: cloud
 extraArgs:
 - --webhook-provider-url=http://localhost:8888
 - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: node-role.kubernetes.io/control-plane
-          operator: DoesNotExist
-        - key: kubernetes.io/arch
-          operator: In
-          values: 
-          - "amd64"
 provider:
   name: webhook
   webhook:
