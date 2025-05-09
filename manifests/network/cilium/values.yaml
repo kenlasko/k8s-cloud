@@ -5,7 +5,7 @@ rollOutCiliumPods: true
 # routingMode: native                 # Native
 routingMode: tunnel               # Tunnel
 tunnelProtocol: geneve            # Tunnel
-ipv4NativeRoutingCIDR: 10.0.0.0/9
+ipv4NativeRoutingCIDR: 10.244.0.0/16
 bpf:
   hostRouting: true
   # hostLegacyRouting: true
