@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: "https://cloudnative-pg.github.io/charts"
+    targetRevision: 0.23.2
+    chart: cloudnative-pg
+    helm:
+      valueFiles:
+      - $values/manifests/postgres/values.yaml
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
+    ref: values
+  - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
+    path: manifests/postgres
+    targetRevision: HEAD
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: postgres
+  ignoreDifferences:
+  - jsonPointers:
+    - /spec/externalName
+    kind: Service
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: restricted
+        pod-security.kubernetes.io/enforce-version: latest
+    automated:
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
