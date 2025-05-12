@@ -18,7 +18,6 @@ spec:
   superuserSecret:
     name: postgres-superuser
   certificates:
-    clientCASecret: postgres-ca-default
     serverAltDNSNames:
     - "home-postgres.tailb7050.ts.net"
     - "home-postgres"
