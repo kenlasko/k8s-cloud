@@ -1,33 +1,36 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: pgadmin
+  name: postgresql
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   sources:
-  - repoURL: "https://helm.runix.net/"
-    targetRevision: 1.44.0
-    chart: pgadmin4
+  - repoURL: "https://cloudnative-pg.github.io/charts"
+    targetRevision: 0.23.2
+    chart: cloudnative-pg
     helm:
       valueFiles:
-      - $values/manifests/database/pgadmin/values.yaml
+      - $values/manifests/database/postgresql/values.yaml
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: manifests/database/pgadmin
+    path: manifests/database/postgresql
     targetRevision: HEAD
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: postgres
+    namespace: postgresql
+  ignoreDifferences:
+  - jsonPointers:
+    - /spec/externalName
+    kind: Service
   syncPolicy:
     managedNamespaceMetadata:
       labels:
-        pod-security.kubernetes.io/enforce: baseline
+        pod-security.kubernetes.io/enforce: restricted
         pod-security.kubernetes.io/enforce-version: latest
     automated:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - ServerSideApply=true

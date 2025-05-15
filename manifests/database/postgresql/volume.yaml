@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres-data
+  name: postgresql-data
 spec:
   storageClassName: local-path
   capacity:
@@ -11,7 +11,7 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/var/postgres"
+    path: "/var/postgresql"
   nodeAffinity:
     required:
       nodeSelectorTerms:

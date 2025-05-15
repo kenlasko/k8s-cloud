@@ -13,11 +13,11 @@ spec:
     chart: pgadmin4
     helm:
       valueFiles:
-      - $values/manifests/pgadmin/values.yaml
+      - $values/manifests/database/pgadmin/values.yaml
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
     ref: values
   - repoURL: "git@github.com:kenlasko/k8s-cloud.git"
-    path: manifests/pgadmin
+    path: manifests/database/pgadmin
     targetRevision: HEAD
   destination:
     server: "https://kubernetes.default.svc"

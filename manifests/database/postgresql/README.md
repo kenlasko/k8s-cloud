@@ -4,8 +4,8 @@ Before creating the cluster, you must first create a secret that contains the fo
 - ```ca.crt``` from ```postgres-ca```
 
 ```
-kubectl get secret -n postgres postgres-replication -o json | yq -P '.data'
-kubectl get secret -n postgres postgres-ca -o json | yq -P '.data'
+kubectl get secret -n postgresql home-replication -o json | yq -P '.data'
+kubectl get secret -n postgresql home-ca -o json | yq -P '.data'
 ```
 
 
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: replication-certs
-  namespace: postgres
+  namespace: postgresql
 type: Opaque
 data:
   ca.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JS...
