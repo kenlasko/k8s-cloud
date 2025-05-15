@@ -4,7 +4,7 @@ metadata:
   name: cloud
   namespace: postgresql
 spec:
-  imageName: docker.io/kenlasko/postgres-gis-pgvector:16-3.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 1
   bootstrap:
     pg_basebackup:
