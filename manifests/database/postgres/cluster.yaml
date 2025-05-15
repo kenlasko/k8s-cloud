@@ -6,15 +6,29 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   instances: 1
-  bootstrap:
-    pg_basebackup:
-      source: home-postgres
-  replica:
-    enabled: true
-    source: home-postgres
+  # bootstrap:
+  #   pg_basebackup:
+  #     source: home-postgres
+  # replica:
+  #   enabled: true
+  #   source: home-postgres
   storage:
     storageClass: local-path
     size: 15Gi
+  backup:
+    retentionPolicy: "7d"
+    barmanObjectStore:
+      endpointURL: "https://fa831d805d821b7c4627b464a9845a9d.r2.cloudflarestorage.com/postgresql"
+      # destinationPath: "s3://postgresql"
+      wal:
+        compression: gzip
+      s3Credentials:
+        accessKeyId:
+          name: cloudflare-s3-backup-postgresql
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: cloudflare-s3-backup-postgresql
+          key: AWS_SECRET_ACCESS_KEY
   enableSuperuserAccess: true
   superuserSecret:
     name: postgres-superuser
