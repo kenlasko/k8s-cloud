@@ -73,16 +73,16 @@
       create_namespace: true
       release_namespace: argocd
       values_files:
-      - /home/ken/k8s-cloud/manifests/argocd/values.yaml
+      - /home/ken/k8s-cloud/argocd/values.yaml
   - name: Apply ArgoCD secrets
     kubernetes.core.k8s:
       state: present
-      src: /home/ken/k8s-cloud/manifests/argocd/sealed-secrets.yaml
+      src: /home/ken/k8s-cloud/argocd/sealed-secrets.yaml
   - name: Apply ArgoCD K8s resources
     kubernetes.core.k8s:
       definition: "{{ lookup('template', '{{ item }}') | from_yaml }}"
     with_fileglob:
-    - "/home/ken/k8s-cloud/manifests/argocd/[a-h]*.yaml"
+    - "/home/ken/k8s-cloud/argocd/[a-h]*.yaml"
     ignore_errors: true
   - name: Apply Cilium gateways
     kubernetes.core.k8s:
