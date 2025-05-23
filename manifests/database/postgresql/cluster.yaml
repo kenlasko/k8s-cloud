@@ -19,20 +19,13 @@ spec:
   # # This should be uncommented if you ever need to use this cluster to restore the primary
   # # cluster. It will backup to Cloudflare S3 storage, which can then be used by the primary 
   # # cluster to restore.
-  # backup:
-  #   retentionPolicy: "7d"
-  #   barmanObjectStore:
-  #     endpointURL: "https://fa831d805d821b7c4627b464a9845a9d.r2.cloudflarestorage.com/"
-  #     destinationPath: "s3://postgresql"
-  #     wal:
-  #       compression: gzip
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: cloudflare-s3-backup-postgresql
-  #         key: AWS_ACCESS_KEY_ID
-  #       secretAccessKey:
-  #         name: cloudflare-s3-backup-postgresql
-  #         key: AWS_SECRET_ACCESS_KEY
+  # plugins:
+  # - name: barman-cloud.cloudnative-pg.io
+  #   enabled: true
+  #   isWALArchiver: true
+  #   parameters:
+  #     barmanObjectName: cloudflare
+
   enableSuperuserAccess: true
   superuserSecret:
     name: postgresql-superuser
