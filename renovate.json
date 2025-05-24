@@ -6,6 +6,7 @@
   ],
   "enabledManagers": [
     "argocd",
+    "helm-values",
     "kubernetes"
   ],
   "argocd": {
@@ -33,11 +34,13 @@
     {
       "matchManagers": [
         "argocd",
+        "helm-values",
         "kubernetes"
       ],
       "matchUpdateTypes": [
         "minor", 
-        "patch"
+        "patch",
+        "digest"
       ],
       "matchPackageNames": [
         "**/!(cilium|descheduler)"
