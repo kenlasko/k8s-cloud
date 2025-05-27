@@ -1,7 +1,7 @@
 replicas: 0
 image:
   repository: vaultwarden/server
-  tag: 1.34.0
+  tag: 1.34.1
   registry: docker.io
 priorityClassName: medium-priority
 securityContext:
