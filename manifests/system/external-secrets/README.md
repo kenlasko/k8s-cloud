@@ -16,7 +16,7 @@ metadata:
   name: cloudflare-api-token
   namespace: cert-manager
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   secretStoreRef:
     name: akeyless
     kind: ClusterSecretStore
@@ -37,7 +37,7 @@ metadata:
   name: adguard-creds
   namespace: adguard
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   secretStoreRef:
     name: akeyless
     kind: ClusterSecretStore
@@ -58,7 +58,7 @@ metadata:
   name: adguard-s3-cloudflare-template
   namespace: adguard
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   secretStoreRef:
     name: akeyless
     kind: ClusterSecretStore
@@ -80,7 +80,7 @@ metadata:
   name: adguard-s3-cloudflare-template
   namespace: adguard
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   secretStoreRef:
     name: akeyless
     kind: ClusterSecretStore
@@ -106,7 +106,7 @@ metadata:
   name: adguard-s3-cloudflare-template
   namespace: adguard
 spec:
-  refreshInterval: 1h
+  refreshInterval: 24h
   secretStoreRef:
     name: akeyless
     kind: ClusterSecretStore
