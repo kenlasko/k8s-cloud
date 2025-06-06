@@ -9,6 +9,8 @@ metadata:
 data:
   url: https://cloud-argocd.ucdialplans.com
   admin.enabled: "false"
+  kustomize.buildOptions: "--enable-helm"
+
   dex.config: |
     connectors:
       - type: github
