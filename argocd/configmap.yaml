@@ -9,7 +9,7 @@ metadata:
 data:
   url: https://cloud-argocd.ucdialplans.com
   admin.enabled: "false"
-  kustomize.buildOptions: "--enable-helm"
+  kustomize.buildOptions: "--enable-helm --load-restrictor LoadRestrictionsNone"
 
   dex.config: |
     connectors:
